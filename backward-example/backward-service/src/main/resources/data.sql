@@ -5,7 +5,7 @@
 --------------------------
 -- Insert Questions
 --------------------------
-INSERT INTO question (id, priority, question, answertype) VALUES
+INSERT INTO question (id, priority, question, answer_type) VALUES
                                                               (1, 100, 'What is your budget?', 'number'),
                                                               (2, 90, 'Do you buy your watch exclusively as an investment, or do you plan to wear it at least occasionally?', 'string'),
                                                               (3, 85, 'Is a watch a status symbol for you?', 'boolean'),

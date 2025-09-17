@@ -1,6 +1,5 @@
 package com.ftn.sbnz.backward.model.models;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,8 +14,11 @@ public class IconicWatchQuestion {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name="point_boost")
     private Double pointBoost;
-    private String postiveAnswer;
+
+    @Column(name="positive_answer")
+    private String positiveAnswer;
 
     @ManyToOne
     private Question question;

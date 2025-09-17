@@ -24,14 +24,14 @@ public class Question {
     @Column
     private String question;
 
-    @Column
+    @Column(name = "answer_type")
     private String answerType;
 
     @ElementCollection
     private List<String> allowedAnswers;
 
     @Transient
-    private Optional<String> answer;
+    private Optional<String> answer = Optional.empty();
 
     public boolean isAnswered() {
         return answer.isPresent();
