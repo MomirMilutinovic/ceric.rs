@@ -33,11 +33,24 @@ public class Question {
     @Transient
     private Optional<String> answer = Optional.empty();
 
-    public boolean isAnswered() {
-        return answer.isPresent();
+    @Transient
+    private boolean processed = false;
+
+    public boolean isNotAnswered() { return answer.isEmpty(); }
+
+    public static boolean isNumeric(String str) {
+        try {
+            Double.parseDouble(str);
+            return true;
+        } catch(NumberFormatException e){
+            return false;
+        }
     }
 
     public boolean isAnswerValid(String answer) {
+        if (this.answerType.equals("number")) {
+            return isNumeric(answer);
+        }
         return this.allowedAnswers.stream().anyMatch(allowedAnswer -> allowedAnswer.equals(answer));
     }
 
