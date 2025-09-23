@@ -109,7 +109,6 @@ INSERT INTO watch (name, brand, price, movement, display, case_material, style) 
                                                                                     ('Nautilus', 'Patek Philippe', 120000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports'),
                                                                                     ('Aquanaut', 'Patek Philippe', 35000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Sports'),
                                                                                     ('Calatrava', 'Patek Philippe', 28000.00, 'Manual', 'Analog', 'Rose Gold', 'Dress'),
-                                                                                    ('Speedmaster Moonwatch', 'Omega', 6300.00, 'Manual', 'Chronograph', 'Stainless Steel', 'Pilot'),
                                                                                     ('Seamaster Diver 300M', 'Omega', 5200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
                                                                                     ('Portugieser Chronograph', 'IWC', 8900.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Dress'),
                                                                                     ('Pilot’s Watch Mark XX', 'IWC', 4900.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot'),
@@ -133,44 +132,223 @@ INSERT INTO watch (name, brand, price, movement, display, case_material, style) 
                                                                                     ('Junghans Max Bill', 'Junghans', 895.00, 'Automatic', 'Minimalist Analog', 'Stainless Steel', 'Bauhaus'),
                                                                                     ('Bulova Marine Star', 'Bulova', 350.00, 'Quartz Chronograph', 'Chronograph', 'Stainless Steel', 'Diver'),
                                                                                     ('MVMT Minimalist', 'MVMT', 95.00, 'Quartz', 'Minimalist Analog', 'Stainless Steel', 'Fashion'),
-                                                                                    ('Sinn 556 I', 'Sinn', 990.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot/Dress');
+                                                                                    ('Sinn 556 I', 'Sinn', 990.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot/Dress'),
+                                                                                    ('Speedmaster Moonwatch', 'Omega', 6301.00, 'Manual', 'Chronograph', 'Stainless Steel', 'Pilot');
 
 -- Insert Features (assuming table: watch_features with columns: watch_id, features)
 
 INSERT INTO watch_features (watch_id, features) VALUES
-                                                    (1, 'Water Resistant'), (1, 'Date Display'), (1, 'Rotatable Bezel'),
-                                                    (2, 'Chronograph'), (2, 'Tachymeter'), (2, 'Screw-down Crown'),
-                                                    (3, 'Annual Calendar'), (3, 'Dual Time Zone'), (3, 'Ring Command Bezel'),
-                                                    (4, 'Octagonal Bezel'), (4, 'Tapisserie Dial'), (4, 'Integrated Bracelet'),
-                                                    (5, 'Chronograph'), (5, 'Screw-down Crown'), (5, 'Exhibition Caseback'),
-                                                    (6, 'Open Heart'), (6, 'Manual Winding'), (6, 'Power Reserve Indicator'),
-                                                    (7, 'Horizontally Embossed Dial'), (7, 'Integrated Bracelet'), (7, 'Date Window'),
-                                                    (8, 'Luminous Hands'), (8, 'Composite Strap'), (8, 'Water Resistant'),
-                                                    (9, 'Minimalist Dial'), (9, 'Leaf Hands'), (9, 'Manual Winding'),
-                                                    (10, 'Moonphase Display'), (10, 'Tachymeter'), (10, 'Hesalite Crystal'),
-                                                    (11, 'Helium Escape Valve'), (11, 'Wave Dial'), (11, 'Date Window'),
-                                                    (12, 'Chronograph'), (12, 'Date Window'), (12, 'Exhibition Caseback'),
-                                                    (13, 'Arabic Numerals'), (13, 'Soft Iron Inner Case'), (13, 'Sapphire Crystal'),
-                                                    (14, 'Chronograph'), (14, 'Tachymeter'), (14, 'Date Window'),
-                                                    (15, 'Unidirectional Bezel'), (15, 'Screw-down Crown'), (15, 'Luminous Markers'),
-                                                    (16, 'Cocktail-inspired Dial'), (16, 'See-through Caseback'), (16, 'Manual Winding'),
-                                                    (17, 'Lumibrite Markers'), (17, 'Screw-down Crown'), (17, 'Day-Date Display'),
-                                                    (18, 'Helium Escape Valve'), (18, 'High-Intensity Titanium'), (18, 'One-piece Case'),
-                                                    (19, 'Domed Crystal'), (19, 'Snowflake Hands'), (19, 'Bronze Case'),
-                                                    (20, 'GMT Function'), (20, 'Cerachrom Bezel'), (20, 'Jumping Hour Hand'),
+-- Rolex Submariner Date (1)
+(1, 'Water Resistant'),
+(1, 'Date Display'),
+(1, 'Rotatable Bezel'),
 
--- 👇 Features for NEW Affordable Watches (IDs 21-34) 👇
-                                                    (21, 'Day-Date Display'), (21, 'See-through Caseback'), (21, '50m Water Resistance'),
-                                                    (22, 'Eco-Drive Solar'), (22, '200m Water Resistance'), (22, 'Uni-directional Bezel'),
-                                                    (23, 'Field Watch Design'), (23, 'Lumed Hands & Markers'), (23, 'Hacking Seconds'),
-                                                    (24, 'Integrated Bracelet'), (24, '80-Hour Power Reserve'), (24, 'Sapphire Crystal'),
-                                                    (25, 'Domed Crystal'), (25, 'Exhibition Caseback'), (25, 'Hand-winding Capable'),
-                                                    (26, 'Domed Acrylic Crystal'), (26, 'Minimalist Design'), (26, 'Weekday Display'),
-                                                    (27, 'Shock Resistant'), (27, '200m Water Resistance'), (27, 'Electroluminescent Backlight'),
-                                                    (28, 'Dive Bezel'), (28, 'Super-LumiNova'), (28, 'Sapphire Crystal'),
-                                                    (29, 'Minimalist Dial'), (29, 'Applied Indices'), (29, '38mm Case'),
-                                                    (30, 'Compass Bezel'), (30, 'Lumibrite Markers'), (30, 'Screw-down Crown'),
-                                                    (31, 'Bauhaus Design'), (31, 'Domed Crystal'), (31, 'Made in Germany'),
-                                                    (32, 'Tachymeter Bezel'), (32, 'Date Display'), (32, '100m Water Resistance'),
-                                                    (33, 'Minimalist Case'), (33, 'Japanese Movement'), (33, 'Interchangeable Straps'),
-                                                    (34, 'Anti-magnetic'), (34, 'Sapphire Crystal'), (34, 'Hardened Steel Case');
+-- Rolex Daytona (2)
+(2, 'Chronograph'),
+(2, 'Tachymeter Bezel'),
+(2, 'Screw-down Crown'),
+
+-- Rolex Sky-Dweller (3)
+(3, 'Annual Calendar'),
+(3, 'Dual Time Zone'),
+(3, 'Ring Command Bezel'),
+(3, 'Date Display'),
+(3, 'Sapphire Crystal'),
+
+-- Royal Oak (4)
+(4, 'Integrated Bracelet'),
+(4, 'Tapisserie Dial'),
+(4, 'Water Resistant'),
+(4, 'Sapphire Crystal'),
+
+-- Royal Oak Offshore (5)
+(5, 'Chronograph'),
+(5, 'Tapisserie Dial'),
+(5, 'Water Resistant'),
+(5, 'Screw-down Crown'),
+(5, 'Rubber Strap Option'),
+
+-- Millenary (6)
+(6, 'Open Heart Dial'),
+(6, 'Manual Winding'),
+(6, 'Off-center Dial'),
+(6, 'Exhibition Caseback'),
+
+-- Nautilus (7)
+(7, 'Integrated Bracelet'),
+(7, 'Horizontally Embossed Dial'),
+(7, 'Date Display'),
+(7, 'Water Resistant'),
+(7, 'Sapphire Crystal'),
+
+-- Aquanaut (8)
+(8, 'Integrated Rubber Strap'),
+(8, 'Travel Time Function (on some models)'),
+(8, 'Water Resistant'),
+(8, 'Luminous Hands'),
+
+-- Calatrava (9)
+(9, 'Minimalist Dial'),
+(9, 'Manual Winding'),
+(9, 'Exhibition Caseback'),
+(9, 'Dauphine Hands'),
+
+-- Seamaster Diver 300M (10)
+(10, 'Helium Escape Valve'),
+(10, 'Wave Dial'),
+(10, 'Date Display'),
+(10, 'Water Resistant 300m'),
+(10, 'Screw-down Crown'),
+
+-- Portugieser Chronograph (11)
+(11, 'Chronograph'),
+(11, 'Tachymeter Scale'),
+(11, 'Date Display'),
+(11, 'Exhibition Caseback'),
+
+-- Pilot’s Watch Mark XX (12)
+(12, 'Soft Iron Inner Case (Anti-magnetic)'),
+(12, 'Luminous Hands & Markers'),
+(12, 'Screw-down Crown'),
+(12, 'Water Resistant'),
+
+-- Carrera Chronograph (13)
+(13, 'Chronograph'),
+(13, 'Tachymeter Bezel'),
+(13, 'Date Display'),
+(13, 'Sapphire Crystal'),
+
+-- Aquaracer (14)
+(14, 'Unidirectional Rotating Bezel'),
+(14, 'Screw-down Crown'),
+(14, 'Water Resistant 300m'),
+(14, 'Luminous Markers'),
+
+-- Presage Cocktail Time (15)
+(15, 'Exhibition Caseback'),
+(15, 'Cocktail-inspired Dial'),
+(15, 'Date Display'),
+(15, 'See-through Caseback'),
+
+-- Prospex Diver (16)
+(16, 'Water Resistant 200m'),
+(16, 'Luminous Hands'),
+(16, 'Unidirectional Bezel'),
+(16, 'Screw-down Crown'),
+
+-- Marinemaster 1000M (17)
+(17, 'Helium Escape Valve'),
+(17, 'Water Resistant 1000m'),
+(17, 'High-intensity Titanium'),
+(17, 'Luminous Markers'),
+
+-- Black Bay 58 (18)
+(18, 'Water Resistant 200m'),
+(18, 'Domed Crystal'),
+(18, 'Bronze Case Patina'),
+(18, 'Heritage Design'),
+
+-- GMT-Master II Pepsi (19)
+(19, 'GMT Function'),
+(19, '24-hour Rotatable Bezel'),
+(19, 'Date Display'),
+(19, 'Screw-down Crown'),
+
+-- Seiko 5 Sports SRPD (20)
+(20, 'Day-Date Display'),
+(20, 'Exhibition Caseback'),
+(20, 'Water Resistant 100m'),
+(20, 'Luminous Hands'),
+
+-- CITIZEN Eco-Drive Promaster (21)
+(21, 'Solar Powered'),
+(21, 'Water Resistant 200m'),
+(21, 'Rotating Bezel'),
+(21, 'Luminous Markers'),
+
+-- Hamilton Khaki Field Auto (22)
+(22, 'Military-inspired Design'),
+(22, 'Luminous Hands & Markers'),
+(22, 'Exhibition Caseback'),
+(22, 'Water Resistant 100m'),
+
+-- Tissot PRX Powermatic 80 (23)
+(23, 'Integrated Bracelet'),
+(23, '80-hour Power Reserve'),
+(23, 'Date Display'),
+(23, 'Exhibition Caseback'),
+
+-- Orient Bambino 4th Gen (24)
+(24, 'Exhibition Caseback'),
+(24, 'Domed Crystal'),
+(24, 'Date Display'),
+(24, 'Classic Dress Design'),
+
+-- Timex Marlin Automatic (25)
+(25, 'Exhibition Caseback'),
+(25, 'Domed Crystal'),
+(25, 'Retro Design'),
+(25, 'Date Display'),
+
+-- Casio G-Shock DW5600E (26)
+(26, 'Shock Resistant'),
+(26, 'Water Resistant 200m'),
+(26, 'Stopwatch'),
+(26, 'Countdown Timer'),
+(26, 'LED Backlight'),
+
+-- Baltic Aquascaphe (27)
+(27, 'Water Resistant 200m'),
+(27, 'Dome Crystal'),
+(27, 'Luminous Markers'),
+(27, 'Vintage-inspired Design'),
+
+-- Lorier Falcon (28)
+(28, 'Exhibition Caseback'),
+(28, 'Minimalist Dial'),
+(28, 'Date Display'),
+(28, 'Dress Watch Design'),
+
+-- Seiko Alpinist SPB121 (29)
+(29, 'Compass Bezel'),
+(29, 'Luminous Hands'),
+(29, 'Sapphire Crystal'),
+(29, 'Mountain-inspired Design'),
+
+-- Junghans Max Bill (30)
+(30, 'Minimalist Bauhaus Design'),
+(30, 'Domed Crystal'),
+(30, 'Date Display (on some models)'),
+(30, 'Exhibition Caseback'),
+
+-- Bulova Marine Star (31)
+(31, 'Chronograph'),
+(31, 'Water Resistant 200m'),
+(31, 'Tachymeter Scale'),
+(31, 'Date Display'),
+
+-- MVMT Minimalist (32)
+(32, 'Minimalist Design'),
+(32, 'Quartz Movement'),
+(32, 'Date Window'),
+(32, 'Fashion-focused'),
+
+-- Sinn 556 I (33)
+(33, 'Anti-magnetic'),
+(33, 'Water Resistant 100m'),
+(33, 'Sapphire Crystal'),
+(33, 'Pilot Watch Design'),
+
+-- Speedmaster Moonwatch (34) — You added this after 33, so watch_id = 34
+(34, 'Chronograph'),
+(34, 'Tachymeter Bezel'),
+(34, 'Manual Winding'),
+(34, 'Moon Mission Heritage'),
+(34, 'Hesalite Crystal');
+
+-- Insert Iconic Watch Questions
+INSERT INTO iconic_watch_question (id, question_id, positive_answer, point_boost) VALUES
+                                                    (1, 15, 'Yes', 100);
+
+INSERT INTO iconic_watch_question_watches(iconic_watch_question_id, watches_id) VALUES
+                                                    (1, 34);

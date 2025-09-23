@@ -1,8 +1,9 @@
 package com.ftn.sbnz.backward.service.questionnaire.service;
 
+import com.ftn.sbnz.backward.model.models.IconicWatchQuestion;
 import com.ftn.sbnz.backward.model.models.Question;
 import com.ftn.sbnz.backward.model.models.Recommendation;
-import com.ftn.sbnz.backward.model.models.Watch;
+import com.ftn.sbnz.backward.service.sessionManagement.IIconicWatchQuestionRepository;
 import com.ftn.sbnz.backward.service.repository.IQuestionRepository;
 import com.ftn.sbnz.backward.service.repository.IWatchRepository;
 import com.ftn.sbnz.backward.service.sessionManagement.SessionRegistry;
@@ -11,7 +12,6 @@ import org.kie.api.runtime.KieSession;
 import org.kie.api.runtime.rule.FactHandle;
 import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -27,12 +27,15 @@ public class QuestionnaireService {
 
     private final IQuestionRepository questionRepository;
 
+    private final IIconicWatchQuestionRepository iconicWatchQuestionRepository;
+
     private final IWatchRepository watchRepository;
 
-    public QuestionnaireService(SessionRegistry sessionRegistry, IQuestionRepository questionRepository, IWatchRepository watchRepository) {
+    public QuestionnaireService(SessionRegistry sessionRegistry, IQuestionRepository questionRepository, IWatchRepository watchRepository, IIconicWatchQuestionRepository iconicWatchQuestionRepository) {
         this.sessionRegistry = sessionRegistry;
         this.questionRepository = questionRepository;
         this.watchRepository = watchRepository;
+        this.iconicWatchQuestionRepository = iconicWatchQuestionRepository;
     }
 
     public String startQuestionnaire() {
@@ -40,6 +43,9 @@ public class QuestionnaireService {
         SessionWrapper sessionWrapper = this.sessionRegistry.createSession();
         for (Recommendation r: getAllWatches()) {
             sessionWrapper.getKieSession().insert(r);
+        }
+        for (IconicWatchQuestion iconicWatchQuestion: iconicWatchQuestionRepository.findAll()) {
+            sessionWrapper.getKieSession().insert(iconicWatchQuestion);
         }
         return sessionWrapper.getSessionId();
     }

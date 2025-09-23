@@ -55,11 +55,3 @@ rule "isInvesting"
         delete($recommendation);
         //watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
 end
-
-rule "Finished first batch of questions" salience -1
-    when
-        not (Question(isNotAnswered())) and
-        not (String(this == "First batch of questions finished"))
-    then
-        insert("First batch of questions finished");
-end
