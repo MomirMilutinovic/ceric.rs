@@ -4,24 +4,23 @@ import com.ftn.sbnz.backward.model.models.Location;
 import com.ftn.sbnz.backward.model.models.Watch;
 import com.ftn.sbnz.backward.model.models.Question;
 import com.ftn.sbnz.backward.model.models.Recommendation;
-import com.ftn.sbnz.backward.model.filters.WatchFilters
 import java.lang.Double;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 global com.ftn.sbnz.backward.kjar.IQuestionRepository questionRepository;
-global com.ftn.sbnz.backward.model.models.Question nextQuestion;
-global java.util.List<org.springframework.data.jpa.domain.Specification> watchSpecifications;
 
 query findQuestionById (Long id)
     $question: Question(id == id)
 end
 
-rule "initNextQuestion" salience 30
-when
-then
-    System.out.println("Resetting global");
-    drools.getKieRuntime().setGlobal("nextQuestion", null);
+query nextQuestion ()
+    $question: Question(isNotAnswered())
+    not (Question((priority > $question.priority) && isNotAnswered()))
+end
+
+query recommendations ()
+    $recommendation: Recommendation()
 end
 
 rule "questionnaireStart" salience 20
@@ -34,8 +33,9 @@ end
 rule "setBudget"
     when
         $question: Question(id == 1 && !isNotAnswered())
+        $recommendation: Recommendation($watch: watch, $watch.getPrice() > Double.parseDouble($question.getAnswer().get()))
     then
-        watchSpecifications.add(WatchFilters.priceLessThan(Double.parseDouble($question.getAnswer().get())));
+        delete($recommendation);
 end
 
 rule "couldBeInvesting"
@@ -49,15 +49,9 @@ end
 rule "isInvesting"
     when
         $question: Question(id == 2 && !isNotAnswered() && getAnswer().get().equals("Investment only"))
+        $recommendation: Recommendation($brand: watch.brand)
+        not(String(this == $brand) from ["Audemars Piguet", "Rolex", "Patek Phillipe"])
     then
-        watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
-end
-
-rule "nextQuestion" salience -1
-when
-    $question: Question(isNotAnswered())
-    not (Question((priority > $question.priority) && isNotAnswered()))
-then
-    System.out.println("Question asked");
-    drools.getKieRuntime().setGlobal("nextQuestion", $question);
+        delete($recommendation);
+        //watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
 end

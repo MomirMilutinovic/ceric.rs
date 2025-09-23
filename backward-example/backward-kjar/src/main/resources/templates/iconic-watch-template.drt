@@ -1,0 +1,33 @@
+template header
+questionId
+watchId
+positiveAnswer
+pointBoost
+
+package rules;
+
+import com.ftn.sbnz.backward.model.models.Watch;
+import com.ftn.sbnz.backward.model.models.Question;
+
+template "iconic-watch-rules"
+
+rule "Add iconic watch question @{row.rowNumber}" salience -1
+no-loop true
+when
+    not (Question(id == @{questionId}))
+    not (Question(isNotAnswered()))
+    Recommendation($watch: watch, $watch.id == @{watchId})
+then
+    insert(questionRepository.findById(@{questionId}L).get());
+end
+
+rule "Boost iconic watch @{row.rowNumber}"
+no-loop true
+when
+    Question(id == @{questionId} && !isNotAnswered() && getAnswer().get().equals("@{positiveAnswer}"))
+    $recommendation: Recommendation($watch: watch, $watch.id == @{watchId})
+then
+    $recommendation.setScore($recommendation.getScore() + @{pointBoost});
+end
+
+end template

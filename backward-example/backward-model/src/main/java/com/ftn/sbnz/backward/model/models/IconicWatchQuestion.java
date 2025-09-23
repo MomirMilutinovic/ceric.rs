@@ -21,8 +21,10 @@ public class IconicWatchQuestion {
     private String positiveAnswer;
 
     @ManyToOne
+    @JoinColumn(name = "question_id")
     private Question question;
 
     @OneToMany
     private List<Watch> watches;
+
 }
