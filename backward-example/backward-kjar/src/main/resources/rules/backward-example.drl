@@ -4,13 +4,11 @@ import com.ftn.sbnz.backward.model.models.Location;
 import com.ftn.sbnz.backward.model.models.Watch;
 import com.ftn.sbnz.backward.model.models.Question;
 import com.ftn.sbnz.backward.model.models.Recommendation;
-import com.ftn.sbnz.backward.model.filters.WatchFilters
 import java.lang.Double;
 import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 global com.ftn.sbnz.backward.kjar.IQuestionRepository questionRepository;
-global java.util.List<org.springframework.data.jpa.domain.Specification> watchSpecifications;
 
 query findQuestionById (Long id)
     $question: Question(id == id)
@@ -19,6 +17,10 @@ end
 query nextQuestion ()
     $question: Question(isNotAnswered())
     not (Question((priority > $question.priority) && isNotAnswered()))
+end
+
+query recommendations ()
+    $recommendation: Recommendation()
 end
 
 rule "questionnaireStart" salience 20
@@ -31,8 +33,9 @@ end
 rule "setBudget"
     when
         $question: Question(id == 1 && !isNotAnswered())
+        $recommendation: Recommendation($watch: watch, $watch.getPrice() > Double.parseDouble($question.getAnswer().get()))
     then
-        watchSpecifications.add(WatchFilters.priceLessThan(Double.parseDouble($question.getAnswer().get())));
+        delete($recommendation);
 end
 
 rule "couldBeInvesting"
@@ -46,6 +49,17 @@ end
 rule "isInvesting"
     when
         $question: Question(id == 2 && !isNotAnswered() && getAnswer().get().equals("Investment only"))
+        $recommendation: Recommendation($brand: watch.brand)
+        not(String(this == $brand) from ["Audemars Piguet", "Rolex", "Patek Phillipe"])
     then
-        watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
+        delete($recommendation);
+        //watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
+end
+
+rule "Finished first batch of questions" salience -1
+    when
+        not (Question(isNotAnswered())) and
+        not (String(this == "First batch of questions finished"))
+    then
+        insert("First batch of questions finished");
 end

@@ -37,7 +37,7 @@ public class Watch {
     @Column
     private String style;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> features;
 
 }

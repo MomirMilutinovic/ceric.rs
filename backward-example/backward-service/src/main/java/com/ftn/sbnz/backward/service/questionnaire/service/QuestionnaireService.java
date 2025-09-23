@@ -15,6 +15,7 @@ import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -37,7 +38,9 @@ public class QuestionnaireService {
     public String startQuestionnaire() {
         // Return sessionId
         SessionWrapper sessionWrapper = this.sessionRegistry.createSession();
-        sessionWrapper.getKieSession().setGlobal("watchSpecifications", new ArrayList<Specification<Watch>>());
+        for (Recommendation r: getAllWatches()) {
+            sessionWrapper.getKieSession().insert(r);
+        }
         return sessionWrapper.getSessionId();
     }
 
@@ -79,11 +82,19 @@ public class QuestionnaireService {
 
     public List<Recommendation> getRecommendations(String sessionId) {
         SessionWrapper sessionWrapper = this.getSession(sessionId);
-        List<Specification<Watch>> watchSpecifications = (List<Specification<Watch>>) sessionWrapper.getKieSession().getGlobal("watchSpecifications");
+        QueryResults results = sessionWrapper.getKieSession().getQueryResults("recommendations");
 
-        Specification<Watch> combinedSpecification = watchSpecifications.stream().reduce(Specification::and).orElse(null);
-        List<Watch> watchesToRecommend = watchRepository.findAll(combinedSpecification);
-        return watchesToRecommend.stream().map(watch -> new Recommendation(null, 0.0, watch)).collect(Collectors.toList());
+        List<Recommendation> recommendations = new ArrayList<>();
+        for (QueryResultsRow row : results) {
+            recommendations.add((Recommendation) row.get("$recommendation"));
+        }
+
+        recommendations.sort(Comparator.comparing(Recommendation::getScore).reversed());
+        return recommendations;
+    }
+
+    private List<Recommendation> getAllWatches() {
+        return watchRepository.findAll().stream().map(watch -> new Recommendation(null, 0.0, watch)).collect(Collectors.toList());
     }
 
 }
