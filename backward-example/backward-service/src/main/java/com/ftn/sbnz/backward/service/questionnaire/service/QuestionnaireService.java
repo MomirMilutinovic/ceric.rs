@@ -50,13 +50,14 @@ public class QuestionnaireService {
     public Optional<Question> getNext(String sessionId) {
         SessionWrapper sessionWrapper = this.getSession(sessionId);
         sessionWrapper.getKieSession().fireAllRules();
-        Question nextQuestion = (Question)(sessionWrapper.getKieSession().getGlobal("nextQuestion"));
-
-        // If there are no more questions the answered question will stay assigned to the nextQuestion drools global
-        if (nextQuestion.isNotAnswered()) {
-            return Optional.of(nextQuestion);
+        QueryResults results = sessionWrapper.getKieSession().getQueryResults("nextQuestion");
+        if (results.size() == 0) {
+            return Optional.empty();
         }
-        return Optional.empty();
+        QueryResultsRow row = results.iterator().next();
+        Question nextQuestion = (Question) row.get("$question");
+
+        return Optional.of(nextQuestion);
     }
 
     public void answer(Question question, String sessionId) {
