@@ -88,7 +88,7 @@ rule "Filter For Sees Watch As Piece Of Craftsmanship"
         delete($recommendation);
 end
 
-rule "Additional Questions For Watch Is ATool"
+rule "Additional Questions For Watch Is A Tool"
     when
         $question: Question(
             id == 9,
@@ -280,3 +280,64 @@ rule "Frequent travellers need GMT or world time"
         delete($recommendation);
 end
 
+rule "Watch display preference"
+    when
+        $question: Question(
+            id == 13,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() != "No preference",
+            $answer: getAnswer().get()
+        )
+        $recommendation: Recommendation(
+            watch.display != $answer
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Don't recommend mehcanical watches to people who don't want to wind them"
+    when
+        $question: Question(
+            id == 5,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() == "No"
+        )
+        $recommendation: Recommendation(
+            (watch.movement == "Automatic" ||
+            watch.movement == "Manual")
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Promote racing watches to motosport fans"
+    when
+        $question: Question(
+            id == 14,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() == "Yes"
+        )
+        $recommendation: Recommendation(
+            $score: score,
+            watch.style == "Racing" ||
+            (watch.features.contains("Tachymeter Bezel") && watch.features.contains("Chronograph"))
+        )
+    then
+        $recommendation.setScore($score + 100);
+end
+
+rule "Ask motorsport question if there are racing watches" salience -1
+no-loop true
+when
+    not (Question(id == 14))
+    not (Question(isNotAnswered()))
+    Recommendation(
+        watch.style == "Racing" ||
+        (watch.features.contains("Tachymeter Bezel") && watch.features.contains("Chronograph"))
+    )
+then
+    insert(questionRepository.findById(14L).get());
+end

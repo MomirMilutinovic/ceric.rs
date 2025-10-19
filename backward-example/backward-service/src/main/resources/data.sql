@@ -102,24 +102,24 @@ INSERT INTO question_allowed_answers (question_id, allowed_answers) VALUES
 -- Insert Watches (main table)
 INSERT INTO watch (name, brand, price, movement, display, case_material, style, glass_material, water_resistance_bar) VALUES
     ('Submariner Date', 'Rolex', 10500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
-    ('Daytona', 'Rolex', 15000.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
-    ('Sky-Dweller', 'Rolex', 45000.00, 'Automatic', 'Analog + Dual Time', 'White Gold', 'Luxury', 'Sapphire Crystal', 10),
+    ('Daytona', 'Rolex', 15000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
+    ('Sky-Dweller', 'Rolex', 45000.00, 'Automatic', 'Analog', 'White Gold', 'Luxury', 'Sapphire Crystal', 10),
     ('Royal Oak', 'Audemars Piguet', 55000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports', 'Sapphire Crystal', 5),
     ('Royal Oak Offshore', 'Audemars Piguet', 35000.00, 'Automatic', 'Chronograph', 'Titanium', 'Sports', 'Sapphire Crystal', 10),
-    ('Millenary', 'Audemars Piguet', 32000.00, 'Manual', 'Open Heart', 'Rose Gold', 'Dress', 'Sapphire Crystal', 3),
+    ('Millenary', 'Audemars Piguet', 32000.00, 'Manual', 'Analog', 'Rose Gold', 'Dress', 'Sapphire Crystal', 3),
     ('Nautilus', 'Patek Philippe', 120000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports', 'Sapphire Crystal', 12),
     ('Aquanaut', 'Patek Philippe', 35000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Sports', 'Sapphire Crystal', 12),
     ('Calatrava', 'Patek Philippe', 28000.00, 'Manual', 'Analog', 'Rose Gold', 'Dress', 'Sapphire Crystal', 3),
     ('Seamaster Diver 300M', 'Omega', 5200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
-    ('Portugieser Chronograph', 'IWC', 8900.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Dress', 'Sapphire Crystal', 3),
+    ('Portugieser Chronograph', 'IWC', 8900.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Sapphire Crystal', 3),
     ('Pilot’s Watch Mark XX', 'IWC', 4900.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot', 'Sapphire Crystal', 10),
-    ('Carrera Chronograph', 'TAG Heuer', 4800.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
+    ('Carrera Chronograph', 'TAG Heuer', 4800.00, 'Automatic', 'Analog', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
     ('Aquaracer', 'TAG Heuer', 3200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
     ('Presage Cocktail Time', 'Seiko', 800.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Hardlex Crystal', 5),
     ('Prospex Diver', 'Seiko', 650.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Hardlex Crystal', 20),
     ('Marinemaster 1000M', 'Seiko', 3200.00, 'Automatic', 'Analog', 'Titanium', 'Diver', 'Sapphire Crystal', 100),
     ('Black Bay 58', 'Tudor', 4100.00, 'Automatic', 'Analog', 'Bronze', 'Diver', 'Domed Sapphire Crystal', 20),
-    ('GMT-Master II Pepsi', 'Rolex', 18000.00, 'Automatic', 'GMT', 'Stainless Steel', 'Travel', 'Sapphire Crystal', 10),
+    ('GMT-Master II Pepsi', 'Rolex', 18000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Travel', 'Sapphire Crystal', 10),
     ('Seiko 5 Sports SRPD', 'Seiko', 275.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual', 'Hardlex Crystal', 10),
     ('CITIZEN Eco-Drive Promaster', 'Citizen', 325.00, 'Solar Quartz', 'Analog', 'Stainless Steel', 'Diver', 'Mineral Crystal', 20),
     ('Hamilton Khaki Field Auto', 'Hamilton', 795.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field', 'Sapphire Crystal', 10),
@@ -130,13 +130,14 @@ INSERT INTO watch (name, brand, price, movement, display, case_material, style, 
     ('Baltic Aquascaphe', 'Baltic', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Double-Domed Sapphire Crystal', 20),
     ('Lorier Falcon', 'Lorier', 695.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Domed Acrylic Crystal', 10),
     ('Seiko Alpinist SPB121', 'Seiko', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field', 'Sapphire Crystal', 20),
-    ('Junghans Max Bill', 'Junghans', 895.00, 'Automatic', 'Minimalist Analog', 'Stainless Steel', 'Bauhaus', 'Plexiglass', 3),
-    ('Bulova Marine Star', 'Bulova', 350.00, 'Quartz Chronograph', 'Chronograph', 'Stainless Steel', 'Diver', 'Mineral Crystal', 10),
-    ('MVMT Minimalist', 'MVMT', 95.00, 'Quartz', 'Minimalist Analog', 'Stainless Steel', 'Fashion', 'Mineral Crystal', 3),
+    ('Junghans Max Bill', 'Junghans', 895.00, 'Automatic', 'Analog', 'Stainless Steel', 'Bauhaus', 'Plexiglass', 3),
+    ('Bulova Marine Star', 'Bulova', 350.00, 'Quartz', 'Analog', 'Stainless Steel', 'Diver', 'Mineral Crystal', 10),
+    ('MVMT Minimalist', 'MVMT', 95.00, 'Quartz', 'Analog', 'Stainless Steel', 'Fashion', 'Mineral Crystal', 3),
     ('Sinn 556 I', 'Sinn', 990.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot/Dress', 'Sapphire Crystal', 20),
-    ('Speedmaster Moonwatch', 'Omega', 6301.00, 'Manual', 'Chronograph', 'Stainless Steel', 'Pilot', 'Hesalite Crystal', 5),
+    ('Speedmaster Moonwatch', 'Omega', 6301.00, 'Manual', 'Analog', 'Stainless Steel', 'Pilot', 'Hesalite Crystal', 5),
     ('G-Shock GBD-200', 'Casio', 160.00, 'Quartz', 'Digital', 'Resin', 'Rugged', 'Mineral Crystal', 20),
-    ('Seiko 5 Sports GMT', 'Seiko', 500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual', 'Hardlex Crystal', 10);
+    ('Seiko 5 Sports GMT', 'Seiko', 500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual', 'Hardlex Crystal', 10),
+    ('Seiko Prospex Speedtimer', 'Seiko', 650.00, 'Solar Quartz', 'Analog', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10);
 
 
 
@@ -208,7 +209,7 @@ INSERT INTO watch_features (watch_id, features) VALUES
 
 -- Portugieser Chronograph (11)
 (11, 'Chronograph'),
-(11, 'Tachymeter Scale'),
+(11, 'Tachymeter Bezel'),
 (11, 'Date Display'),
 (11, 'Exhibition Caseback'),
 
