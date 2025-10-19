@@ -23,6 +23,9 @@ query recommendations ()
     $recommendation: Recommendation()
 end
 
+query budgetBetween (double lower, double upper)
+end
+
 rule "questionnaireStart" salience 20
     when
         not (Question())
@@ -42,7 +45,6 @@ rule "couldBeInvesting"
     when
         $question: Question(id == 1 && !isNotAnswered() && (Double.parseDouble(getAnswer().get()) > 10000))
     then
-        System.out.println("Other Question asked");
         insert(questionRepository.findById(2L).get());
 end
 
@@ -53,5 +55,289 @@ rule "isInvesting"
         not(String(this == $brand) from ["Audemars Piguet", "Rolex", "Patek Phillipe"])
     then
         delete($recommendation);
-        //watchSpecifications.add(WatchFilters.brandIsOneOf(List.of("Audemars Piguet", "Rolex", "Patek Phillipe")));
+end
+
+rule "isNotInvesting"
+    when
+        (
+            $question: Question(id == 1 && !isNotAnswered() && (Double.parseDouble(getAnswer().get()) <= 10000))
+            or
+            $question: Question(id == 2 && !isNotAnswered() && getAnswer().get().equals("I plan to wear it"))
+        )
+    then
+        insert(questionRepository.findById(4L).get());
+        insert(questionRepository.findById(9L).get());
+        insert(questionRepository.findById(11L).get());
+        insert(questionRepository.findById(12L).get());
+end
+
+rule "Filter For Sees Watch As Piece Of Craftsmanship"
+    when
+        $question: Question(
+            id == 9,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Craftsmanship")
+        )
+        $recommendation: Recommendation(
+            $movement: watch.movement,
+            $display: watch.display,
+            ($display.equals("Digital") || $movement.equals("Quartz"))
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Additional Questions For Watch Is A Tool"
+    when
+        $question: Question(
+            id == 9,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Tool")
+        )
+    then
+        insert(questionRepository.findById(5L).get());
+        insert(questionRepository.findById(13L).get());
+end
+
+rule "Needs Robust Watch For Sports"
+    when
+        $question: Question(
+            id == 4,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("During physical activities")
+        )
+        $recommendation: Recommendation(
+            $glass: watch.glassMaterial,
+            $style: watch.style,
+            ($style != "Rugged" && !$glass.toLowerCase().contains("sapphire"))
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Dress Watch For Special Occasions"
+    when
+        $question: Question(
+            id == 4,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("For formal occasions")
+        )
+        $recommendation: Recommendation(
+            $style: watch.style,
+            ($style != "Dress")
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Ask About Scratch Resistance"
+    when
+        $question: Question(
+            id == 4,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            !getAnswer().get().equals("During physical activities")
+        )
+    then
+        insert(questionRepository.findById(10L).get());
+end
+
+
+rule "Ask About Sports Activities"
+    when
+        $question: Question(
+            id == 4,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("During physical activities")
+        )
+    then
+        insert(questionRepository.findById(6L).get());
+        insert(questionRepository.findById(7L).get());
+        insert(questionRepository.findById(8L).get());
+end
+
+rule "User Wants Scratch Resistance"
+    when
+        $question: Question(
+            id == 10,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            $glass: watch.glassMaterial,
+            $style: watch.style,
+            (!$glass.toLowerCase().contains("sapphire") && !$glass.toLowerCase().contains("hesalite") && !$glass.toLowerCase().contains("hardlex"))
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Needs 10Bar WR For Swimming"
+    when
+        $question: Question(
+            id == 6,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            $waterResistance: watch.waterResistanceBar,
+            ($waterResistance < 10)
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Needs 20Bar WR For Diving"
+    when
+        $question: Question(
+            id == 8,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            $waterResistance: watch.waterResistanceBar,
+            ($waterResistance < 20)
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Needs Stopwatch For Running"
+    when
+        $question: Question(
+            id == 7,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            $features: watch.features,
+            (!$features.contains("Chronograph") && !$features.contains("Stopwatch"))
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Promote watches with lap memory for runners"
+    when
+        $question: Question(
+            id == 7,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            $features: watch.features,
+            $score: score,
+            $features.contains("Lap Memory")
+        )
+    then
+        $recommendation.setScore($score + 100);
+end
+
+rule "Promote quartz watches for people who see watches as a tool"
+    when
+        $question: Question(
+            id == 9,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Tool")
+        )
+        $recommendation: Recommendation(
+            $score: score,
+            $movement: watch.movement,
+            (
+                $movement.toLowerCase.contains("quartz") ||
+                $movement == "Eco-Drive"
+            )
+        )
+    then
+        $recommendation.setScore($score + 10);
+end
+
+rule "Frequent travellers need GMT or world time"
+    when
+        $question: Question(
+            id == 12,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            watch.features not contains "GMT Function",
+            watch.features not contains "World Time",
+            watch.features not contains "Dual Time Zone"
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Watch display preference"
+    when
+        $question: Question(
+            id == 13,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() != "No preference",
+            $answer: getAnswer().get()
+        )
+        $recommendation: Recommendation(
+            watch.display != $answer
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Don't recommend mehcanical watches to people who don't want to wind them"
+    when
+        $question: Question(
+            id == 5,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() == "No"
+        )
+        $recommendation: Recommendation(
+            (watch.movement == "Automatic" ||
+            watch.movement == "Manual")
+        )
+    then
+        delete($recommendation);
+end
+
+rule "Promote racing watches to motosport fans"
+    when
+        $question: Question(
+            id == 14,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get() == "Yes"
+        )
+        $recommendation: Recommendation(
+            $score: score,
+            watch.style == "Racing" ||
+            (watch.features.contains("Tachymeter Bezel") && watch.features.contains("Chronograph"))
+        )
+    then
+        $recommendation.setScore($score + 100);
+end
+
+rule "Ask motorsport question if there are racing watches" salience -1
+no-loop true
+when
+    not (Question(id == 14))
+    not (Question(isNotAnswered()))
+    Recommendation(
+        watch.style == "Racing" ||
+        (watch.features.contains("Tachymeter Bezel") && watch.features.contains("Chronograph"))
+    )
+then
+    insert(questionRepository.findById(14L).get());
 end

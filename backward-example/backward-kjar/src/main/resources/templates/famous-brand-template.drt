@@ -1,0 +1,37 @@
+template header
+upper
+lower
+brandsList
+
+package rules;
+
+import com.ftn.sbnz.backward.model.models.Watch;
+import com.ftn.sbnz.backward.model.models.Question;
+import com.ftn.sbnz.backward.model.models.Recommendation;
+import java.lang.Double;
+
+template "famous-brands-rules"
+
+rule "@{row.rowNumber} Famous watch brands between @{lower} and @{upper}"
+    when
+        $question: Question(
+            id == 11,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            getAnswer().get().equals("Yes")
+        )
+        $recommendation: Recommendation(
+            watch.brand not in (@{brandsList})
+        )
+        Question(
+            id == 1,
+            !isNotAnswered(),
+            getAnswer().isPresent(),
+            Double.parseDouble(getAnswer().get()) >= @{lower},
+            Double.parseDouble(getAnswer().get()) < @{upper}
+        )
+    then
+        delete($recommendation);
+end
+
+end template
