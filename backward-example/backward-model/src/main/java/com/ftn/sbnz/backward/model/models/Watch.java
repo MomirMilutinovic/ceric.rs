@@ -47,6 +47,9 @@ public class Watch {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> features;
 
+    @Column(length = 1000)
+    private String imageUrl;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
