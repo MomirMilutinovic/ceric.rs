@@ -1,13 +1,15 @@
 package com.ftn.sbnz.backward.service.questionnaire.controller;
 
 import com.ftn.sbnz.backward.model.models.Question;
+import com.ftn.sbnz.backward.model.models.User;
 import com.ftn.sbnz.backward.service.questionnaire.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import java.util.Optional;
 
 @RestController
@@ -32,11 +34,12 @@ public class QuestionnaireController {
 
     @PostMapping("/answer")
     public ResponseEntity answerQuestionnaire(@RequestBody Question answeredQuestion, @CookieValue(name = SESSION_ID_COOKIE_NAME, required = true) String sessionId) {
+        User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         questionnaireService.answer(answeredQuestion, sessionId);
         Optional<Question> nextQuestion = questionnaireService.getNext(sessionId);
         if (nextQuestion.isPresent()) {
             return ResponseEntity.ok(nextQuestion);
         }
-        return ResponseEntity.ok(questionnaireService.getRecommendations(sessionId));
+        return ResponseEntity.ok(questionnaireService.getRecommendations(sessionId, user));
     }
 }

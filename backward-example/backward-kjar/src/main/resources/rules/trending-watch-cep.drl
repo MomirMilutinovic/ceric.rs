@@ -1,0 +1,69 @@
+
+package rules;
+
+import com.ftn.sbnz.backward.model.models.RecommendationEvent;
+import com.ftn.sbnz.backward.model.models.Recommendation;
+import com.ftn.sbnz.backward.model.models.Watch;
+import com.ftn.sbnz.backward.model.models.TrendingWatchEvent;
+
+import java.lang.Double;
+import java.util.List;
+import org.springframework.data.jpa.domain.Specification;
+
+rule "Mark frequently recommended watch as trending"
+    when
+        $watch: Watch($id: id, $name: name)
+        $totalRecommendations: Number(intValue > 0) from accumulate(
+            $rec: RecommendationEvent()
+            over window:time(24h),
+            count($rec)
+        )
+        // Ovaj prag bi bilo malo teze demonstrirati na odbrani
+        //Number(intValue >= $totalRecommendations * 0.05) from accumulate(
+        Number(intValue >= 2) from accumulate(
+            $rec: RecommendationEvent(
+                recommendations.contains(new Recommendation($watch))
+            )
+            over window:time(24h),
+            count($rec)
+        )
+        not(TrendingWatchEvent(watch.id == $id))
+    then
+        System.out.println("Watch " + $name + " became trending");
+        insert(new TrendingWatchEvent($watch));
+end
+
+query trendingWatches ()
+    TrendingWatchEvent($watch: watch)
+end
+
+query recommendationEvents ()
+    $re : RecommendationEvent()
+end
+
+query totalRecommendations()
+        $totalRecommendations: Number(intValue >= 0) from accumulate(
+            $rec: RecommendationEvent()
+            over window:time(24h),
+            count($rec)
+        )
+end
+
+query recommendationsForGShock ()
+        $watch: Watch(id == 26L)
+        $totalRecommendations: Number(intValue >= 0) from accumulate(
+            $rec: RecommendationEvent(
+                recommendations.contains(new Recommendation($watch))
+            )
+            over window:time(24h),
+            count($rec)
+        )
+end
+
+query watches ()
+    $watch: Watch()
+end
+
+query GShock ()
+    $watch: Watch(id == 26L)
+end
