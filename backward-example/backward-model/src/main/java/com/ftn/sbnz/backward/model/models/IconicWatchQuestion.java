@@ -3,7 +3,7 @@ package com.ftn.sbnz.backward.model.models;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
 
 @Entity

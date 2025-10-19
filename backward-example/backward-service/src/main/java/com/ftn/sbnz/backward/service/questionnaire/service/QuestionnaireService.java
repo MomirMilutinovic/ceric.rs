@@ -1,8 +1,8 @@
 package com.ftn.sbnz.backward.service.questionnaire.service;
 
-import com.ftn.sbnz.backward.model.models.IconicWatchQuestion;
-import com.ftn.sbnz.backward.model.models.Question;
-import com.ftn.sbnz.backward.model.models.Recommendation;
+import com.ftn.sbnz.backward.model.models.*;
+import com.ftn.sbnz.backward.service.repository.IRecommendationEventRepository;
+import com.ftn.sbnz.backward.service.repository.IRecommendationRepository;
 import com.ftn.sbnz.backward.service.sessionManagement.IIconicWatchQuestionRepository;
 import com.ftn.sbnz.backward.service.repository.IQuestionRepository;
 import com.ftn.sbnz.backward.service.repository.IWatchRepository;
@@ -14,10 +14,7 @@ import org.kie.api.runtime.rule.QueryResults;
 import org.kie.api.runtime.rule.QueryResultsRow;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
@@ -31,16 +28,35 @@ public class QuestionnaireService {
 
     private final IWatchRepository watchRepository;
 
-    public QuestionnaireService(SessionRegistry sessionRegistry, IQuestionRepository questionRepository, IWatchRepository watchRepository, IIconicWatchQuestionRepository iconicWatchQuestionRepository) {
+    private final SessionWrapper cepSessionWrapper;
+
+    private final IRecommendationEventRepository recommendationEventRepository;
+
+    private final IRecommendationRepository recommendationRepository;
+
+    public QuestionnaireService(SessionRegistry sessionRegistry, IQuestionRepository questionRepository, IWatchRepository watchRepository, IIconicWatchQuestionRepository iconicWatchQuestionRepository, IRecommendationEventRepository recommendationEventRepository, IRecommendationRepository recommendationRepository) {
         this.sessionRegistry = sessionRegistry;
         this.questionRepository = questionRepository;
         this.watchRepository = watchRepository;
         this.iconicWatchQuestionRepository = iconicWatchQuestionRepository;
+        this.cepSessionWrapper = this.sessionRegistry.createCEPSession();
+        this.recommendationEventRepository = recommendationEventRepository;
+        this.recommendationRepository = recommendationRepository;
+
+        for (RecommendationEvent event : recommendationEventRepository.findAll()) {
+            this.cepSessionWrapper.getKieSession().insert(event);
+        }
     }
 
     public String startQuestionnaire() {
         // Return sessionId
-        SessionWrapper sessionWrapper = this.sessionRegistry.createSession();
+        QueryResults watchResults = this.cepSessionWrapper.getKieSession().getQueryResults("watches");
+        if (watchResults.size() == 0) {
+            for (Watch w: watchRepository.findAll()) {
+                this.cepSessionWrapper.getKieSession().insert(w);
+            }
+        }
+        SessionWrapper sessionWrapper = this.sessionRegistry.createQuestionnaireSession();
         for (Recommendation r: getAllWatches()) {
             sessionWrapper.getKieSession().insert(r);
         }
@@ -53,6 +69,7 @@ public class QuestionnaireService {
     private SessionWrapper getSession(String sessionId) {
         SessionWrapper sessionWrapper = this.sessionRegistry.getSession(sessionId);
         sessionWrapper.getKieSession().setGlobal("questionRepository", new KjarRepositoryWrapper(this.questionRepository));
+        sessionWrapper.getKieSession().setGlobal("trendingWatches", getTrendingWatches());
         return sessionWrapper;
     }
 
@@ -67,6 +84,15 @@ public class QuestionnaireService {
         Question nextQuestion = (Question) row.get("$question");
 
         return Optional.of(nextQuestion);
+    }
+
+    public List<Watch> getTrendingWatches() {
+        List<Watch> trendingWatches = new ArrayList<>();
+        QueryResults results = this.cepSessionWrapper.getKieSession().getQueryResults("trendingWatches");
+        for (QueryResultsRow row : results) {
+            trendingWatches.add((Watch) row.get("$watch"));
+        }
+        return trendingWatches;
     }
 
     public void answer(Question question, String sessionId) {
@@ -86,14 +112,24 @@ public class QuestionnaireService {
         kieSession.update(fh, question);
     }
 
-    public List<Recommendation> getRecommendations(String sessionId) {
+    public List<Recommendation> getRecommendations(String sessionId, User user) {
         SessionWrapper sessionWrapper = this.getSession(sessionId);
-        QueryResults results = sessionWrapper.getKieSession().getQueryResults("recommendations");
 
+        QueryResults results = sessionWrapper.getKieSession().getQueryResults("recommendations");
         List<Recommendation> recommendations = new ArrayList<>();
         for (QueryResultsRow row : results) {
             recommendations.add((Recommendation) row.get("$recommendation"));
         }
+
+        RecommendationEvent recommendationEvent = new RecommendationEvent();
+        recommendationEvent.setTimestamp(new Date());
+        recommendationEvent.setUser(user);
+        List<Recommendation> savedRecommendations = recommendationRepository.saveAll(recommendations);
+        recommendationEvent.setRecommendations(savedRecommendations);
+        recommendationEventRepository.save(recommendationEvent);
+
+        cepSessionWrapper.getKieSession().insert(recommendationEvent);
+        cepSessionWrapper.getKieSession().fireAllRules();
 
         recommendations.sort(Comparator.comparing(Recommendation::getScore).reversed());
         return recommendations;

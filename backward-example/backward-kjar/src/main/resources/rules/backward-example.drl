@@ -9,6 +9,7 @@ import java.util.List;
 import org.springframework.data.jpa.domain.Specification;
 
 global com.ftn.sbnz.backward.kjar.IQuestionRepository questionRepository;
+global java.util.List<com.ftn.sbnz.backward.model.Watch> trendingWatches;
 
 query findQuestionById (Long id)
     $question: Question(id == id)
@@ -340,4 +341,18 @@ when
     )
 then
     insert(questionRepository.findById(14L).get());
+end
+
+rule "Upgrade trending watches" salience -2
+    when
+        not (Question(isNotAnswered()))
+        $recommendation: Recommendation(
+            $score: score,
+            $watch: watch,
+            $name: watch.name,
+            trendingWatches.contains($watch)
+        )
+    then
+        System.out.println("Upgraded trending watch " + $name);
+        $recommendation.setScore($score + 20);
 end

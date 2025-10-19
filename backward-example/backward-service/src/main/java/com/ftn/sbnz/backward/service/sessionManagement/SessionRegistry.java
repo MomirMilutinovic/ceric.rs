@@ -39,8 +39,8 @@ public class SessionRegistry {
         this.famousBrandsForBudgetRepository = famousBrandsForBudgetRepository;
     }
 
-    public SessionWrapper createSession() {
-        InternalKnowledgeBase kieBase = getKnowledgeBase();
+    public SessionWrapper createQuestionnaireSession() {
+        InternalKnowledgeBase kieBase = getKnowledgeBase("/rules/backward-example.drl", true);
         KieSession kieSession = kieBase.newKieSession();
         String sessionId = UUID.randomUUID().toString();
         SessionWrapper sessionWrapper = new SessionWrapper(kieSession, sessionId);
@@ -48,17 +48,29 @@ public class SessionRegistry {
         return sessionWrapper;
     }
 
-    private InternalKnowledgeBase getKnowledgeBase() {
+    public SessionWrapper createCEPSession() {
+        InternalKnowledgeBase kieBase = getKnowledgeBase("/rules/trending-watch-cep.drl", false);
+        KieSession kieSession = kieBase.newKieSession();
+        String sessionId = UUID.randomUUID().toString();
+        SessionWrapper sessionWrapper = new SessionWrapper(kieSession, sessionId);
+        sessionWrapper.setDontClean(true);
+        sessions.put(sessionId, sessionWrapper);
+        return sessionWrapper;
+    }
+
+    private InternalKnowledgeBase getKnowledgeBase(String drlPath, boolean shouldExpandTemplates) {
         KnowledgeBuilder kBuilder = KnowledgeBuilderFactory.newKnowledgeBuilder();
-        loadDRL(kBuilder);
-        expandTemplates(kBuilder);
+        loadDRL(kBuilder, drlPath);
+        if (shouldExpandTemplates) {
+            expandTemplates(kBuilder);
+        }
         InternalKnowledgeBase kieBase = KnowledgeBaseFactory.newKnowledgeBase();
         kieBase.addPackages(kBuilder.getKnowledgePackages());
         return kieBase;
     }
 
-    private void loadDRL(KnowledgeBuilder kBuilder) {
-        InputStream rulesInputStream = BackwardKjarApplication.class.getResourceAsStream("/rules/backward-example.drl");
+    private void loadDRL(KnowledgeBuilder kBuilder, String drlPath) {
+        InputStream rulesInputStream = BackwardKjarApplication.class.getResourceAsStream(drlPath);
         kBuilder.add(ResourceFactory.newInputStreamResource(rulesInputStream), ResourceType.DRL);
         if( kBuilder.hasErrors() ){
             for(KnowledgeBuilderError err: kBuilder.getErrors()){
@@ -109,7 +121,7 @@ public class SessionRegistry {
     public Map<String, SessionWrapper> getIdleSessions(long idleThresholdSeconds) {
         Instant threshold = Instant.now().minusSeconds(idleThresholdSeconds);
         return sessions.entrySet().stream()
-                .filter(entry -> entry.getValue().getLastAccessed().isBefore(threshold))
+                .filter(entry -> entry.getValue().getLastAccessed().isBefore(threshold) && !entry.getValue().isDontClean())
                 .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 

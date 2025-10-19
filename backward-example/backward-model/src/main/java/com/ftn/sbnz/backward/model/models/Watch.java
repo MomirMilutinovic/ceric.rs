@@ -4,8 +4,9 @@ package com.ftn.sbnz.backward.model.models;
 import lombok.Data;
 import org.kie.api.definition.type.Position;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 @Data
@@ -46,4 +47,11 @@ public class Watch {
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> features;
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Watch watch = (Watch) o;
+        return Objects.equals(id, watch.id);
+    }
 }
