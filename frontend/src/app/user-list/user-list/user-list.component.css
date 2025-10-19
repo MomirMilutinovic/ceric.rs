@@ -1,0 +1,14 @@
+.filterContainer {
+    display: flex;
+    gap: 16px;
+}
+
+#search {
+    flex-grow: 1;
+}
+
+.bottom-right {
+    position: fixed;
+    bottom: 16px;
+    right: 16px;
+}

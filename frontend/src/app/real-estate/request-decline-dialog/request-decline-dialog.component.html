@@ -1,0 +1,11 @@
+<h2 mat-dialog-title>Decline Request</h2>
+<mat-dialog-content>
+  <mat-form-field appearance="fill">
+    <mat-label>Reasoning</mat-label>
+    <input matInput [(ngModel)]="inputData" />
+  </mat-form-field>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <!-- <button mat-button (click)="onNoClick()">Odustani</button> -->
+  <button mat-button (click)="submit()">Submit</button>
+</mat-dialog-actions>

@@ -1,0 +1,48 @@
+<mat-sidenav-container #show_nav class="sidenav-container surface-container-lowest" *ngIf="navigationShouldBeShown">
+  <mat-sidenav #drawer class="sidenav" fixedInViewport
+      [attr.role]="(isSmall$ | async) ? 'dialog' : 'navigation'"
+      [mode]="(isSmall$ | async) ? 'over' : 'side'"
+      [opened]="(isSmall$ | async) === false">
+    <mat-toolbar><img src="images/logo_horizontal.png" /></mat-toolbar>
+    <mat-nav-list *ngIf="userHasRole('ADMIN')">
+      <a mat-list-item href="#" routerLink="watches">Watches</a>
+      <a mat-list-item href="#" routerLink="iconic-watch-question">Iconic watch questions</a>
+    </mat-nav-list>
+    <mat-nav-list *ngIf="userHasRole('CUSTOMER')">
+      <a mat-list-item href="#" routerLink="watches">Questionnaire</a>
+      <a mat-list-item href="#" routerLink="results">My results</a>
+    </mat-nav-list>
+  </mat-sidenav>
+  
+  <mat-sidenav-content class="surface-container-lowest">
+    <mat-toolbar id="content-toolbar" class="surface-container-lowest mat-elevation-z4">
+      @if (isSmall$ | async) {
+        <button
+          type="button"
+          aria-label="Toggle sidenav"
+          mat-icon-button
+          (click)="drawer.toggle()">
+          <mat-icon aria-label="Side nav toggle icon">menu</mat-icon>
+        </button>
+      }
+      <button class="right" mat-icon-button aria-label="Log out" (click)="logOut()">
+        <mat-icon>logout</mat-icon>
+      </button>
+    </mat-toolbar>
+    <!-- Add Content Here -->
+    <div class="container surface-container-lowest">
+      <ng-container *ngTemplateOutlet="template"></ng-container>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+
+<div *ngIf="!navigationShouldBeShown">
+  <ng-container *ngTemplateOutlet="template"></ng-container>
+</div>
+
+
+
+<!-- https://stackoverflow.com/questions/40077355/changing-router-outlet-with-ngif-in-app-component-html-in-angular2 -->
+<ng-template #template>
+  <router-outlet></router-outlet>
+</ng-template>

@@ -1,0 +1,33 @@
+<form [formGroup]="signupForm">
+    <mat-form-field appearance="outline">
+        <mat-label>Username</mat-label>
+        <input matInput aria-label="Username" type="text" name="username" formControlName="username" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('username')?.hasError('required')">Username is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Email</mat-label>
+        <input matInput aria-label="Email" type="email" name="email" formControlName="email" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('email')?.hasError('required')">Email is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Password</mat-label>
+        <input matInput aria-label="Password" type="password" name="password" formControlName="password" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('password')?.hasError('required')">Password is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Confirm password</mat-label>
+        <input matInput aria-label="Confirm password" type="password" name="passwordConfirmation" formControlName="passwordConfirmation" [errorStateMatcher]="matcher" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('passwordConfirmation')?.hasError('required')">You must confirm your new password</mat-error>
+        <mat-error *ngIf="signupForm.hasError('passwordMismatch')">Passwords do not match</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>First name</mat-label>
+        <input matInput aria-label="First name" type="text" name="firstName" formControlName="firstName" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('firstName')?.hasError('required')">First name is required</mat-error>
+    </mat-form-field>
+    <mat-form-field appearance="outline">
+        <mat-label>Last name</mat-label>
+        <input matInput aria-label="Last name" type="text" name="lastName" formControlName="lastName" (keyup)="onChange()" />
+        <mat-error *ngIf="signupForm.get('lastName')?.hasError('required')">Last name is required</mat-error>
+    </mat-form-field>
+</form>

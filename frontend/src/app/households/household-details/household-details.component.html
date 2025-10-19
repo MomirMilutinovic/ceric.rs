@@ -1,0 +1,53 @@
+<div class="details-and-filters-container">
+  <div class="household-details" *ngIf="household">
+    <h2>Household Details</h2>
+    <p><strong>ID:</strong> {{ household.id }}</p>
+    <p><strong>Floor Number:</strong> {{ household.floorNumber }}</p>
+    <p><strong>Square Footage:</strong> {{ household.squareFootage }}</p>
+    <p><strong>Owner Name:</strong> {{ household.owner?.firstName }}</p>
+    <p><strong>Owner Email:</strong> {{ household.owner?.email }}</p>
+    <p><strong>Active:</strong> {{ household.isActive ? 'Yes' : 'No' }}</p>
+  </div>
+
+  <div class="date-filters">
+    <h3>Select Availability Period</h3>
+    <mat-form-field appearance="outline">
+      <mat-label>Preset Period</mat-label>
+      <mat-select (selectionChange)="onPresetSelection($event.value)">
+        <mat-option value="3h">Last 3 Hours</mat-option>
+        <mat-option value="6h">Last 6 Hours</mat-option>
+        <mat-option value="12h">Last 12 Hours</mat-option>
+        <mat-option value="24h">Last 24 Hours</mat-option>
+        <mat-option value="7d">Last Week</mat-option>
+        <mat-option value="1m">Last Month</mat-option>
+        <mat-option value="3m">Last 3 Months</mat-option>
+        <mat-option value="1y">Last Year</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <div class="date-picker-container">
+      <mat-form-field appearance="outline">
+        <mat-label>From</mat-label>
+        <input matInput [matDatepicker]="startPicker" [(ngModel)]="startDate" (dateChange)="onStartDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+        <mat-datepicker #startPicker></mat-datepicker>
+      </mat-form-field>
+
+      <mat-form-field appearance="outline">
+        <mat-label>To</mat-label>
+        <input matInput [matDatepicker]="endPicker" [(ngModel)]="endDate" (dateChange)="onEndDateChange($event)">
+        <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+        <mat-datepicker #endPicker></mat-datepicker>
+      </mat-form-field>
+    </div>
+
+    <button mat-raised-button (click)="onSearch()">Search</button>
+  </div>
+</div>
+<div>
+  <app-availability-chart
+    [datasets]="availabilityChart.data"
+    [labels]="availabilityChart.labels"
+    [options]="availabilityChart.options">
+  </app-availability-chart>
+</div>

@@ -1,0 +1,29 @@
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+button {
+    margin-right: auto;
+}
+
+mat-form-field:first-of-type {
+    margin-top: 8px;
+}
+
+mat-form-field {
+    margin-bottom: 8px;
+}
+
+mat-form-field:last-of-type {
+    margin-bottom: 20px;
+}
+
+.preview {
+    height: 100px;
+}
+
+img {
+    width: 100px;
+    height: 100px;
+}

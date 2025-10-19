@@ -1,0 +1,25 @@
+/* You can add global styles to this file, and also import other style files */
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+/* https://medium.com/@paer.linder/angular-material-18-using-surface-and-surface-container-colors-cc2764bef56e */
+.surface {
+    background-color: var(--mdc-surface);
+}
+.surface-container-lowest {
+    background-color: var(--mdc-surface-container-lowest);
+}
+.surface-container-low {
+    background-color: var(--mdc-surface-container-low);
+}
+.surface-container {
+    background-color: var(--mdc-surface-container);
+}
+.surface-container-high {
+    background-color: var(--mdc-surface-container-high);
+}
+.surface-container-highest {
+    background-color: var(--mdc-surface-container-highest);
+}

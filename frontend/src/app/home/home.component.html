@@ -1,0 +1,11 @@
+<div *ngIf="loading" class="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<div *ngIf="!loading" class="grid">
+  <app-watch-card
+    *ngFor="let w of watches"
+    [watch]="w"
+    >
+  </app-watch-card>
+</div>

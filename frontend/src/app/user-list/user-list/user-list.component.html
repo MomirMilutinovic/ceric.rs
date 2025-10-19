@@ -1,0 +1,21 @@
+<div class="filterContainer">
+
+</div>
+<div class="filterContainer">
+  <mat-form-field>
+      <mat-label>Role</mat-label>
+      <mat-select (selectionChange)="updateRoleFilter($event)">
+          @for (role of roles; track role) {
+            <mat-option [value]="role.value">{{role.viewValue}}</mat-option>
+          }
+        </mat-select>
+  </mat-form-field>
+  <mat-form-field id="search">
+      <mat-label>Search</mat-label>
+      <input matInput (keyup)="updateSearchQuery($event)" #input>
+  </mat-form-field>
+</div>
+<app-user-table #table></app-user-table>
+<button mat-fab class="bottom-right" [disabled]="isNotSuperAdmin" (click)="openAddUserDialog()">
+  <mat-icon>person_add</mat-icon>
+</button>

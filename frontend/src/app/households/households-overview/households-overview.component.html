@@ -1,0 +1,72 @@
+<div class="filter-container" [formGroup]="filterHouseholdsForm" >
+  <mat-form-field id="floorNumberInput">
+    <mat-label>Floor number</mat-label>
+    <input matInput type="number" formControlName="floorNumber"/>
+  </mat-form-field>
+  <mat-form-field id="squareFootageInput">
+    <mat-label>Square footage</mat-label>
+    <input matInput type="number" formControlName="squareFootage"/>
+  </mat-form-field>
+  <mat-form-field id="isActive">
+    <mat-label>Is Active</mat-label>
+    <mat-select formControlName="isActive">
+      <mat-option [value]="null">All</mat-option>
+      <mat-option [value]="true">Active</mat-option>
+      <mat-option [value]="false">Inactive</mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field id="hasOwner">
+    <mat-label>Has owner</mat-label>
+    <mat-select formControlName="hasOwner">
+      <mat-option [value]="null">All</mat-option>
+      <mat-option [value]="true">With owner</mat-option>
+      <mat-option [value]="false">Without owner</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <button mat-raised-button id="filter-btn" (click)="filterClicked()">Search</button>
+</div>
+
+
+
+
+<div id="householdsTableDiv">
+  <table id="householdsTable" mat-table [dataSource]="dataSource" matSort>
+
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>ID</th>
+      <td mat-cell *matCellDef="let element"> {{element?.id}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="floorNumber">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Floor Number</th>
+      <td mat-cell *matCellDef="let element"> {{element?.floorNumber}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="squareFootage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Square Footage</th>
+      <td mat-cell *matCellDef="let element"> {{element?.squareFootage}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="owner">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>Owner</th>
+      <td mat-cell *matCellDef="let element"> {{element?.owner?.username}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="isActive">
+      <th mat-header-cell *matHeaderCellDef>Is Active</th>
+      <td mat-cell *matCellDef="let element"> {{element?.isActive ? 'Yes' : 'No'}} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="details">
+      <th mat-header-cell *matHeaderCellDef>Details</th>
+      <td mat-cell *matCellDef="let element">
+        <button id="details-btn" mat-raised-button color="primary" (click)="goToDetails(element.id)">View Details</button>
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+  </table>
+
+</div>

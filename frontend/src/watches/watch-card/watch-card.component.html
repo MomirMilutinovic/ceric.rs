@@ -1,0 +1,57 @@
+<mat-card class="watch-card" appearance="outlined">
+  <div class="media">
+    <img
+      *ngIf="watch?.imageUrl; else placeholder"
+      [src]="watch.imageUrl"
+      [alt]="watch?.brand + ' ' + watch?.name"
+      loading="lazy"
+      decoding="async"
+    />
+    <ng-template #placeholder>
+      <div class="placeholder" aria-label="No image available">
+        <mat-icon>watch</mat-icon>
+      </div>
+    </ng-template>
+  </div>
+
+  <mat-card-header>
+    <mat-card-title class="title" matTooltip="{{ watch?.brand }} {{ watch?.name }}">
+      {{ watch?.brand }} · {{ watch?.name }}
+    </mat-card-title>
+    <mat-card-subtitle>
+      <span *ngIf="watch?.style">{{ watch.style }}</span>
+    </mat-card-subtitle>
+  </mat-card-header>
+
+  <mat-card-content>
+    <div class="price" *ngIf="watch?.price !== null && watch?.price !== undefined">
+      {{ watch.price | currency: currencyCode:'symbol':'1.0-0' }}
+    </div>
+
+    <dl class="specs">
+      <div *ngIf="watch?.movement">
+        <dt>Movement</dt><dd>{{ watch.movement }}</dd>
+      </div>
+      <div *ngIf="watch?.display">
+        <dt>Display</dt><dd>{{ watch.display }}</dd>
+      </div>
+      <div *ngIf="watch?.caseMaterial">
+        <dt>Case</dt><dd>{{ watch.caseMaterial }}</dd>
+      </div>
+      <div *ngIf="watch?.glassMaterial">
+        <dt>Glass</dt><dd>{{ watch.glassMaterial }}</dd>
+      </div>
+      <div *ngIf="watch?.waterResistanceBar !== null && watch?.waterResistanceBar !== undefined">
+        <dt>Water</dt>
+        <dd>{{ watch.waterResistanceBar }} bar<span *ngIf="waterResistanceMeters"> ({{ waterResistanceMeters }} m)</span></dd>
+      </div>
+    </dl>
+
+    <div class="features" *ngIf="watch?.features?.length">
+      <mat-chip-set aria-label="Features">
+        <mat-chip *ngFor="let f of watch.features">{{ f }}</mat-chip>
+      </mat-chip-set>
+    </div>
+  </mat-card-content>
+
+</mat-card>

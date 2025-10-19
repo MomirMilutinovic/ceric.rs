@@ -1,0 +1,91 @@
+/* mat-toolbar {
+    background-color: #ffffff;
+    box-shadow: #7e7777;
+  }
+  
+  .powergrid{
+    justify-content: flex-start;
+    font-size: 30px;
+    color: white;
+  }
+  
+  div {
+    width: 100%;
+    justify-content: flex-end;
+    display: flex;
+    align-items: center;
+  }
+  
+  .favorite-icon {
+    color: white;
+    margin: 5px;
+  }
+  
+  .notification {
+    display: block;
+  }
+  
+  .notificationIcon {
+    color: #664269;
+    margin-left: 0;
+    padding-left: 0;
+  }
+  
+  
+  .notificationType {
+    justify-content: flex-start;
+    display: flex;
+    margin-bottom: 0;
+    padding-bottom: 0;
+  }
+  
+  h4{
+    margin-right: 5px;
+  }
+  
+  
+  .nott {
+    width: 400px;
+  } */
+
+  mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #1976d2; /* Primer boje - plava */
+    color: white;
+    padding: 0 16px; /* Razmak sa leve i desne strane */
+    height: 64px; /* Standardna visina toolbar-a */
+    box-sizing: border-box;
+    width: 100%;
+    overflow: hidden;
+  }
+  
+  .powergrid-logo {
+    display: flex;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    white-space: nowrap;
+  }
+  
+  .content {
+    display: flex;
+    align-items: center;
+  }
+  
+  button.example-icon {
+    display: flex;
+    width: fit-content;
+    align-items: center;
+    color: white;
+    white-space: nowrap;
+    font-size: 1rem;
+    text-transform: none;
+    margin-right: 20px; /* Manji razmak sa desne strane */
+  }
+  
+  button.example-icon:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  

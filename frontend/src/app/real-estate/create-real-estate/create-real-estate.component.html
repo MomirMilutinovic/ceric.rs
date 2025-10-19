@@ -1,0 +1,68 @@
+<div class="container">
+    <form class="example-form" [formGroup]="createRealEstateForm">
+    
+      <mat-form-field class="example-full-width">
+        <mat-label>Address</mat-label>
+        <input matInput required placeholder="Ex. Polgar Andrasa 1" name="address" formControlName="address"/>
+        <div *ngIf="(submitted && createRealEstateForm.get('address')?.hasError('required')) || createRealEstateForm.get('address')?.hasError('required') && createRealEstateForm.get('address')?.touched">
+          <span class="error-message">Address is required.</span>
+        </div>
+      </mat-form-field>
+
+      <!-- <mat-form-field appearance="outline">
+        <mat-label>Odaberite grad</mat-label>
+        <mat-select [(value)]="selectedCityId" (selectionChange)="onCityChange($event.value)">
+          <mat-option *ngFor="let city of cities" [value]="city.name">
+            {{ city.name }}
+          </mat-option>
+        </mat-select>
+      </mat-form-field> -->
+
+      <mat-form-field class="example-full-width">
+        <mat-label>City</mat-label>
+        <mat-select required placeholder="Ex. Beograd" name="city" formControlName="city" [(value)]="selectedCityId" (selectionChange)="onCityChange($event.value)">
+          <mat-option *ngFor="let city of cities" [value]="city">
+            {{ city.name }}
+          </mat-option>
+        </mat-select>
+        <div *ngIf="(submitted && createRealEstateForm.get('city')?.hasError('required')) || createRealEstateForm.get('city')?.hasError('required') && createRealEstateForm.get('city')?.touched">
+          <span class="error-message">City is required.</span>
+        </div>
+      </mat-form-field>
+
+      <mat-form-field class="example-full-width">
+        <mat-label>Floor number</mat-label>
+        <input matInput required type="number" min="0" class="example-right-align" placeholder="0" name="floorNumber" formControlName="floorNumber">
+        <div *ngIf="(submitted && createRealEstateForm.get('floorNumber')?.hasError('required')) || createRealEstateForm.get('floorNumber')?.hasError('required') && createRealEstateForm.get('minGuests')?.touched">
+          <span class="error-message">Floor number is required.</span>
+        </div>
+      </mat-form-field>
+    </form>
+    
+    <p>Attach Images for the real estate</p>
+    <div class="images-upload">
+      <input class="fileInput" type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden/>
+      <label for="fileInput" class="custom-file-label">Choose Images</label>
+
+      <div class="loadImages"> 
+        <!-- <div *ngFor="let image of selectedImages">
+        <img [src]="image.url" alt="selected image" class="image"> -->
+        <!-- </div> -->
+      </div>
+    </div>
+
+    <p>Attach valid documents for the real estate</p>
+    <div class="file-upload">
+        <input class="fileInput" type="file" id="fileInput" (change)="onFileSelected($event)" multiple hidden/>
+        <label for="fileInput" class="custom-file-label">Choose Files</label>
+        <!-- <span class="file-names">{{ selectedFiles }}</span> -->
+    </div>
+
+    <div class="map">
+      <app-map (dataSent)="onDataReceived($event)"></app-map>
+    </div>
+
+    <button (click)="create()" mat-raised-button class="nextButton">Add Households</button>
+</div>
+    
+<div class="cont2"></div>

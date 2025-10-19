@@ -1,0 +1,77 @@
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 20px;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+.details-and-filters-container {
+  display: flex;
+  gap: 20px;
+  margin: auto;
+}
+
+.household-details {
+  flex: 2;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.household-details h2 {
+  font-size: 1.5em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.household-details p {
+  margin: 5px 0;
+  font-size: 1em;
+}
+
+.date-filters {
+  flex: 1;
+  padding: 15px;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  background-color: #f9f9f9;
+  box-shadow: 1px 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.date-filters h3 {
+  font-size: 1.3em;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.date-picker-container {
+  display: flex;
+  gap: 10px;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-select, input[matInput] {
+  background-color: #fff;
+  border-radius: 4px;
+}
+
+button[mat-raised-button] {
+  margin-top: 10px;
+  background-color: #5e97d9;
+  color: #fff;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #4573a0;
+}
+
+app-availability-chart {
+  margin-top: 20px;
+}

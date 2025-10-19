@@ -1,0 +1,22 @@
+<div class="container" [ngClass]="{'is-small': isSmall, 'is-xsmall': isXSmall}">
+    <mat-card appearance="outlined" [ngClass]="{'is-small': isSmall, 'is-xsmall': isXSmall}">
+        <mat-card-header>
+            <mat-card-title>
+                <img src="images/logo_horizontal.png" />
+            </mat-card-title>
+            <mat-card-title>
+                <h1>Sign up</h1>
+            </mat-card-title>
+            <mat-card-subtitle>
+                Enter your details to sign up
+            </mat-card-subtitle>
+        </mat-card-header>
+        <mat-card-content>
+            <app-user-registration-form #form></app-user-registration-form>
+        </mat-card-content>
+
+        <mat-card-actions>
+            <button mat-flat-button [disabled]="!canSubmit" (click)="signUp()">Sign up</button>
+        </mat-card-actions>
+    </mat-card>
+</div>

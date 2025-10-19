@@ -1,0 +1,35 @@
+<div class="container">
+    <form class="example-form" [formGroup]="createHouseholdForm">
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Idetificator</mat-label>
+            <input matInput required type="number" min="0" class="example-right-align" placeholder="0" name="id" formControlName="id">
+            <div *ngIf="(submitted && createHouseholdForm.get('id')?.hasError('required')) || (createHouseholdForm.get('id')?.hasError('required') && createHouseholdForm.get('id')?.touched)">
+                <span class="error-message">Identificator for household is required.</span>
+            </div>
+        </mat-form-field>
+    
+        <mat-form-field class="example-full-width">
+            <mat-label>Square Footage</mat-label>
+            <input matInput required type="number" min="0" class="example-right-align" placeholder="0" name="squareFootage" formControlName="squareFootage">
+            <div *ngIf="(submitted && createHouseholdForm.get('squareFootage')?.hasError('required')) || (createHouseholdForm.get('squareFootage')?.hasError('required') && createHouseholdForm.get('squareFootage')?.touched)">
+            <span class="error-message">Square Footage number is required.</span>
+            </div>
+        </mat-form-field>
+
+        <mat-form-field class="example-full-width">
+            <mat-label>Floor number</mat-label>
+            <input matInput required type="number" min="0" class="example-right-align" placeholder="0" name="floorNumber" formControlName="floorNumber">
+            <div *ngIf="(submitted && createHouseholdForm.get('floorNumber')?.hasError('required')) || (createHouseholdForm.get('floorNumber')?.hasError('required') && createHouseholdForm.get('floorNumber')?.touched)">
+            <span class="error-message">Floor number is required.</span>
+            </div>
+        </mat-form-field>
+    </form>
+    
+    <div class="buttons">
+        <!-- <button (click)="addMore()" mat-raised-button class="nextButton">Add More</button> -->
+        <button (click)="create()" mat-raised-button class="nextButton">Add</button>
+    </div>  
+</div>
+    
+<div class="cont2"></div>
