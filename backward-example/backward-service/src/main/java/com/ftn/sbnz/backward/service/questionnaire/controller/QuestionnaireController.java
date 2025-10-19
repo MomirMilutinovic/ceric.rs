@@ -2,6 +2,8 @@ package com.ftn.sbnz.backward.service.questionnaire.controller;
 
 import com.ftn.sbnz.backward.model.models.Question;
 import com.ftn.sbnz.backward.model.models.User;
+import com.ftn.sbnz.backward.model.models.Watch;
+import com.ftn.sbnz.backward.service.questionnaire.dto.TrendingWatchesDto;
 import com.ftn.sbnz.backward.service.questionnaire.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -10,6 +12,8 @@ import org.springframework.web.bind.annotation.*;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletResponse;
+
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -41,5 +45,10 @@ public class QuestionnaireController {
             return ResponseEntity.ok(nextQuestion);
         }
         return ResponseEntity.ok(questionnaireService.getRecommendations(sessionId, user));
+    }
+
+    @GetMapping("/trending-watches")
+    public ResponseEntity<TrendingWatchesDto> trendingWatches() {
+        return ResponseEntity.ok(new TrendingWatchesDto(questionnaireService.getTrendingWatches()));
     }
 }
