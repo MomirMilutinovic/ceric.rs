@@ -35,7 +35,13 @@ public class Watch {
     private String caseMaterial;
 
     @Column
+    private String glassMaterial;
+
+    @Column
     private String style;
+
+    @Column
+    private Long waterResistanceBar;
 
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> features;

@@ -27,7 +27,7 @@ public class Question {
     @Column(name = "answer_type")
     private String answerType;
 
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> allowedAnswers;
 
     @Transient

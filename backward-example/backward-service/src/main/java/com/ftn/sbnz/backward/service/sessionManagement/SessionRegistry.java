@@ -1,6 +1,8 @@
 package com.ftn.sbnz.backward.service.sessionManagement;
 
 import com.ftn.sbnz.backward.kjar.BackwardKjarApplication;
+import com.ftn.sbnz.backward.model.models.FamousBrandsForBudget;
+import com.ftn.sbnz.backward.service.repository.IFamousBrandsForBudgetRepository;
 import org.drools.core.impl.InternalKnowledgeBase;
 import org.drools.core.impl.KnowledgeBaseFactory;
 import org.drools.template.ObjectDataCompiler;
@@ -18,10 +20,7 @@ import java.io.InputStream;
 import java.io.Reader;
 import java.io.StringReader;
 import java.time.Instant;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
@@ -30,12 +29,14 @@ public class SessionRegistry {
 
     private final Map<String, SessionWrapper> sessions = new ConcurrentHashMap<>();
     private final KieContainer kieContainer;
-    private IIconicWatchQuestionRepository iconicWatchQuestionRepository;
+    private final IIconicWatchQuestionRepository iconicWatchQuestionRepository;
+    private final IFamousBrandsForBudgetRepository famousBrandsForBudgetRepository;
 
     @Autowired
-    public SessionRegistry(KieContainer kieContainer, IIconicWatchQuestionRepository iconicWatchQuestionRepository) {
+    public SessionRegistry(KieContainer kieContainer, IIconicWatchQuestionRepository iconicWatchQuestionRepository, IFamousBrandsForBudgetRepository famousBrandsForBudgetRepository) {
         this.kieContainer = kieContainer;
         this.iconicWatchQuestionRepository = iconicWatchQuestionRepository;
+        this.famousBrandsForBudgetRepository = famousBrandsForBudgetRepository;
     }
 
     public SessionWrapper createSession() {
@@ -62,6 +63,7 @@ public class SessionRegistry {
         if( kBuilder.hasErrors() ){
             for(KnowledgeBuilderError err: kBuilder.getErrors()){
                 System.err.println(err.toString());
+                System.err.println(err.getMessage());
             }
             throw new IllegalStateException( "DRL errors" );
         }
@@ -69,16 +71,22 @@ public class SessionRegistry {
 
     private void expandTemplates(KnowledgeBuilder kBuilder) {
         List<IconicWatchQuestionDto> iconicWatchQuestionDtos = iconicWatchQuestionRepository.getIconicWatchQuestionDtos();
+        List<FamousBrandsForBudget> famousBrandsForBudgets = famousBrandsForBudgetRepository.findAll();
+        expandTemplate(kBuilder, iconicWatchQuestionDtos, "/templates/iconic-watch-template.drt");
+        expandTemplate(kBuilder, famousBrandsForBudgets, "/templates/famous-brand-template.drt");
+    }
+
+    private void expandTemplate(KnowledgeBuilder knowledgeBuilder, Collection<?> entries, String pathToTemplate) {
         ObjectDataCompiler converter = new ObjectDataCompiler();
-        InputStream templateInputStream = BackwardKjarApplication.class.getResourceAsStream("/templates/iconic-watch-template.drt");
+        InputStream templateInputStream = BackwardKjarApplication.class.getResourceAsStream(pathToTemplate);
         if (templateInputStream == null) {
-            throw new IllegalStateException( "Iconic watch question template not found" );
+            throw new IllegalStateException( "Template " + pathToTemplate + " not found" );
         }
-        String drl = converter.compile(iconicWatchQuestionDtos, templateInputStream);
+        String drl = converter.compile(entries, templateInputStream);
         Reader rdr = new StringReader(drl);
-        kBuilder.add(ResourceFactory.newReaderResource(rdr), ResourceType.DRL);
-        if( kBuilder.hasErrors() ){
-            for(KnowledgeBuilderError err: kBuilder.getErrors()){
+        knowledgeBuilder.add(ResourceFactory.newReaderResource(rdr), ResourceType.DRL);
+        if(knowledgeBuilder.hasErrors()){
+            for(KnowledgeBuilderError err: knowledgeBuilder.getErrors()){
                 System.err.println(err.toString());
                 System.err.println(Arrays.toString(err.getLines()));
                 System.err.println(err.getMessage());
@@ -108,4 +116,5 @@ public class SessionRegistry {
     public int size() {
         return sessions.size();
     }
+
 }

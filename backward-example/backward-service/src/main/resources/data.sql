@@ -86,7 +86,8 @@ INSERT INTO question_allowed_answers (question_id, allowed_answers) VALUES
 INSERT INTO question_allowed_answers (question_id, allowed_answers) VALUES
                                                                         (13, 'Analog'),
                                                                         (13, 'Digital'),
-                                                                        (13, 'Hybrid');
+                                                                        (13, 'Hybrid'),
+                                                                        (13, 'No preference');
 
 -- Q14: Motorsport enthusiast
 INSERT INTO question_allowed_answers (question_id, allowed_answers) VALUES
@@ -99,41 +100,46 @@ INSERT INTO question_allowed_answers (question_id, allowed_answers) VALUES
                                                                         (15, 'No');
 
 -- Insert Watches (main table)
-INSERT INTO watch (name, brand, price, movement, display, case_material, style) VALUES
-                                                                                    ('Submariner Date', 'Rolex', 10500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Daytona', 'Rolex', 15000.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing'),
-                                                                                    ('Sky-Dweller', 'Rolex', 45000.00, 'Automatic', 'Analog + Dual Time', 'White Gold', 'Luxury'),
-                                                                                    ('Royal Oak', 'Audemars Piguet', 55000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports'),
-                                                                                    ('Royal Oak Offshore', 'Audemars Piguet', 35000.00, 'Automatic', 'Chronograph', 'Titanium', 'Sports'),
-                                                                                    ('Millenary', 'Audemars Piguet', 32000.00, 'Manual', 'Open Heart', 'Rose Gold', 'Dress'),
-                                                                                    ('Nautilus', 'Patek Philippe', 120000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports'),
-                                                                                    ('Aquanaut', 'Patek Philippe', 35000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Sports'),
-                                                                                    ('Calatrava', 'Patek Philippe', 28000.00, 'Manual', 'Analog', 'Rose Gold', 'Dress'),
-                                                                                    ('Seamaster Diver 300M', 'Omega', 5200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Portugieser Chronograph', 'IWC', 8900.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Dress'),
-                                                                                    ('Pilot’s Watch Mark XX', 'IWC', 4900.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot'),
-                                                                                    ('Carrera Chronograph', 'TAG Heuer', 4800.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing'),
-                                                                                    ('Aquaracer', 'TAG Heuer', 3200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Presage Cocktail Time', 'Seiko', 800.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress'),
-                                                                                    ('Prospex Diver', 'Seiko', 650.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Marinemaster 1000M', 'Seiko', 3200.00, 'Automatic', 'Analog', 'Titanium', 'Diver'),
-                                                                                    ('Black Bay 58', 'Tudor', 4100.00, 'Automatic', 'Analog', 'Bronze', 'Diver'),
-                                                                                    ('GMT-Master II Pepsi', 'Rolex', 18000.00, 'Automatic', 'GMT', 'Stainless Steel', 'Travel'),
-                                                                                    ('Seiko 5 Sports SRPD', 'Seiko', 275.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual'),
-                                                                                    ('CITIZEN Eco-Drive Promaster', 'Citizen', 325.00, 'Solar Quartz', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Hamilton Khaki Field Auto', 'Hamilton', 795.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field'),
-                                                                                    ('Tissot PRX Powermatic 80', 'Tissot', 675.00, 'Automatic', 'Analog', 'Stainless Steel', 'Integrated Bracelet'),
-                                                                                    ('Orient Bambino 4th Gen', 'Orient', 225.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress'),
-                                                                                    ('Timex Marlin Automatic', 'Timex', 199.00, 'Automatic', 'Analog', 'Stainless Steel', 'Retro'),
-                                                                                    ('Casio G-Shock DW5600E', 'Casio', 50.00, 'Quartz', 'Digital', 'Resin', 'Sports'),
-                                                                                    ('Baltic Aquascaphe', 'Baltic', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver'),
-                                                                                    ('Lorier Falcon', 'Lorier', 695.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress'),
-                                                                                    ('Seiko Alpinist SPB121', 'Seiko', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field'),
-                                                                                    ('Junghans Max Bill', 'Junghans', 895.00, 'Automatic', 'Minimalist Analog', 'Stainless Steel', 'Bauhaus'),
-                                                                                    ('Bulova Marine Star', 'Bulova', 350.00, 'Quartz Chronograph', 'Chronograph', 'Stainless Steel', 'Diver'),
-                                                                                    ('MVMT Minimalist', 'MVMT', 95.00, 'Quartz', 'Minimalist Analog', 'Stainless Steel', 'Fashion'),
-                                                                                    ('Sinn 556 I', 'Sinn', 990.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot/Dress'),
-                                                                                    ('Speedmaster Moonwatch', 'Omega', 6301.00, 'Manual', 'Chronograph', 'Stainless Steel', 'Pilot');
+INSERT INTO watch (name, brand, price, movement, display, case_material, style, glass_material, water_resistance_bar) VALUES
+    ('Submariner Date', 'Rolex', 10500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
+    ('Daytona', 'Rolex', 15000.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
+    ('Sky-Dweller', 'Rolex', 45000.00, 'Automatic', 'Analog + Dual Time', 'White Gold', 'Luxury', 'Sapphire Crystal', 10),
+    ('Royal Oak', 'Audemars Piguet', 55000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports', 'Sapphire Crystal', 5),
+    ('Royal Oak Offshore', 'Audemars Piguet', 35000.00, 'Automatic', 'Chronograph', 'Titanium', 'Sports', 'Sapphire Crystal', 10),
+    ('Millenary', 'Audemars Piguet', 32000.00, 'Manual', 'Open Heart', 'Rose Gold', 'Dress', 'Sapphire Crystal', 3),
+    ('Nautilus', 'Patek Philippe', 120000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Luxury Sports', 'Sapphire Crystal', 12),
+    ('Aquanaut', 'Patek Philippe', 35000.00, 'Automatic', 'Analog', 'Stainless Steel', 'Sports', 'Sapphire Crystal', 12),
+    ('Calatrava', 'Patek Philippe', 28000.00, 'Manual', 'Analog', 'Rose Gold', 'Dress', 'Sapphire Crystal', 3),
+    ('Seamaster Diver 300M', 'Omega', 5200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
+    ('Portugieser Chronograph', 'IWC', 8900.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Dress', 'Sapphire Crystal', 3),
+    ('Pilot’s Watch Mark XX', 'IWC', 4900.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot', 'Sapphire Crystal', 10),
+    ('Carrera Chronograph', 'TAG Heuer', 4800.00, 'Automatic', 'Chronograph', 'Stainless Steel', 'Racing', 'Sapphire Crystal', 10),
+    ('Aquaracer', 'TAG Heuer', 3200.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Sapphire Crystal', 30),
+    ('Presage Cocktail Time', 'Seiko', 800.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Hardlex Crystal', 5),
+    ('Prospex Diver', 'Seiko', 650.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Hardlex Crystal', 20),
+    ('Marinemaster 1000M', 'Seiko', 3200.00, 'Automatic', 'Analog', 'Titanium', 'Diver', 'Sapphire Crystal', 100),
+    ('Black Bay 58', 'Tudor', 4100.00, 'Automatic', 'Analog', 'Bronze', 'Diver', 'Domed Sapphire Crystal', 20),
+    ('GMT-Master II Pepsi', 'Rolex', 18000.00, 'Automatic', 'GMT', 'Stainless Steel', 'Travel', 'Sapphire Crystal', 10),
+    ('Seiko 5 Sports SRPD', 'Seiko', 275.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual', 'Hardlex Crystal', 10),
+    ('CITIZEN Eco-Drive Promaster', 'Citizen', 325.00, 'Solar Quartz', 'Analog', 'Stainless Steel', 'Diver', 'Mineral Crystal', 20),
+    ('Hamilton Khaki Field Auto', 'Hamilton', 795.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field', 'Sapphire Crystal', 10),
+    ('Tissot PRX Powermatic 80', 'Tissot', 675.00, 'Automatic', 'Analog', 'Stainless Steel', 'Integrated Bracelet', 'Sapphire Crystal', 10),
+    ('Orient Bambino 4th Gen', 'Orient', 225.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Domed Mineral Crystal', 3),
+    ('Timex Marlin Automatic', 'Timex', 199.00, 'Automatic', 'Analog', 'Stainless Steel', 'Retro', 'Acrylic Crystal', 3),
+    ('Casio G-Shock DW5600E', 'Casio', 50.00, 'Quartz', 'Digital', 'Resin', 'Rugged', 'Mineral Glass', 20),
+    ('Baltic Aquascaphe', 'Baltic', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Diver', 'Double-Domed Sapphire Crystal', 20),
+    ('Lorier Falcon', 'Lorier', 695.00, 'Automatic', 'Analog', 'Stainless Steel', 'Dress', 'Domed Acrylic Crystal', 10),
+    ('Seiko Alpinist SPB121', 'Seiko', 750.00, 'Automatic', 'Analog', 'Stainless Steel', 'Field', 'Sapphire Crystal', 20),
+    ('Junghans Max Bill', 'Junghans', 895.00, 'Automatic', 'Minimalist Analog', 'Stainless Steel', 'Bauhaus', 'Plexiglass', 3),
+    ('Bulova Marine Star', 'Bulova', 350.00, 'Quartz Chronograph', 'Chronograph', 'Stainless Steel', 'Diver', 'Mineral Crystal', 10),
+    ('MVMT Minimalist', 'MVMT', 95.00, 'Quartz', 'Minimalist Analog', 'Stainless Steel', 'Fashion', 'Mineral Crystal', 3),
+    ('Sinn 556 I', 'Sinn', 990.00, 'Automatic', 'Analog', 'Stainless Steel', 'Pilot/Dress', 'Sapphire Crystal', 20),
+    ('Speedmaster Moonwatch', 'Omega', 6301.00, 'Manual', 'Chronograph', 'Stainless Steel', 'Pilot', 'Hesalite Crystal', 5),
+    ('G-Shock GBD-200', 'Casio', 160.00, 'Quartz', 'Digital', 'Resin', 'Rugged', 'Mineral Crystal', 20),
+    ('Seiko 5 Sports GMT', 'Seiko', 500.00, 'Automatic', 'Analog', 'Stainless Steel', 'Casual', 'Hardlex Crystal', 10);
+
+
+
 
 -- Insert Features (assuming table: watch_features with columns: watch_id, features)
 
@@ -344,7 +350,21 @@ INSERT INTO watch_features (watch_id, features) VALUES
 (34, 'Tachymeter Bezel'),
 (34, 'Manual Winding'),
 (34, 'Moon Mission Heritage'),
-(34, 'Hesalite Crystal');
+(34, 'Hesalite Crystal'),
+
+-- Casio G-Shock GBD-200 (35)
+(35, 'Shock Resistant'),
+(35, 'Water Resistant 200m'),
+(35, 'Stopwatch'),
+(35, 'Countdown Timer'),
+(35, 'World Time'),
+(35, 'Lap Memory'),
+(35, 'Bluetooth'),
+(35, 'LED Backlight'),
+
+-- Seiko 5 Sports GMT (36)
+(36, 'GMT Function'),
+(36, 'Date Display');
 
 -- Insert Iconic Watch Questions
 INSERT INTO iconic_watch_question (id, question_id, positive_answer, point_boost) VALUES
@@ -352,3 +372,30 @@ INSERT INTO iconic_watch_question (id, question_id, positive_answer, point_boost
 
 INSERT INTO iconic_watch_question_watches(iconic_watch_question_id, watches_id) VALUES
                                                     (1, 34);
+
+-- Famous brands
+INSERT INTO  famous_brands_for_budget(lower, upper) VALUES
+ (0, 500),
+ (500, 2000),
+ (2000, 10000),
+ (10000, 10000000);
+
+INSERT INTO famous_brands_for_budget_brands(famous_brands_for_budget_id, brands) VALUES
+ (1, 'Casio'),
+ (1, 'Seiko'),
+ (1, 'Swatch'),
+ (2, 'Seiko'),
+ (2, 'Citizen'),
+ (2, 'Hamilton'),
+ (2, 'Oris'),
+ (2, 'Tissot'),
+ (3, 'Longines'),
+ (3, 'Tudor'),
+ (3, 'Omega'),
+ (3, 'Breitling'),
+ (3, 'Tag Heuer'),
+ (3, 'Cartier'),
+ (3, 'Rolex'),
+ (4, 'Rolex'),
+ (4, 'Audemars Piguet'),
+ (4, 'Patek Philippe');
