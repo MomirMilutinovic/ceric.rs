@@ -1,0 +1,55 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="iconic-form">
+
+  <!-- Question selection -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Question</mat-label>
+    <mat-select formControlName="questionId" required>
+      <mat-option *ngFor="let q of questions" [value]="q.id">
+        {{ q.question }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('questionId')?.hasError('required')">
+      Question is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Positive answer -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Positive Answer</mat-label>
+    <input matInput formControlName="positiveAnswer" required placeholder="Enter the positive answer" />
+    <mat-error *ngIf="form.get('positiveAnswer')?.hasError('required')">
+      Positive answer is required
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Point boost -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Point Boost</mat-label>
+    <input matInput type="number" formControlName="pointBoost" required placeholder="Enter point boost" />
+    <mat-error *ngIf="form.get('pointBoost')?.hasError('required')">
+      Point boost is required
+    </mat-error>
+    <mat-error *ngIf="form.get('pointBoost')?.hasError('min')">
+      Must be 0 or greater
+    </mat-error>
+  </mat-form-field>
+
+  <!-- Watch selection -->
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Associated Watches</mat-label>
+    <mat-select formControlName="watchIds" multiple required>
+      <mat-option *ngFor="let w of watches" [value]="w.id">
+        {{ w.brand }} — {{ w.name }}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('watchIds')?.hasError('required')">
+      At least one watch must be selected
+    </mat-error>
+  </mat-form-field>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+    Submit
+  </button>
+
+</form>
+

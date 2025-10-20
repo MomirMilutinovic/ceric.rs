@@ -1,0 +1,41 @@
+<mat-card>
+  <mat-card-title>Custom Questions</mat-card-title>
+
+  <div class="table-container">
+    <table mat-table [dataSource]="questions" class="mat-elevation-z1">
+
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let q">{{ q.id }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="question">
+        <th mat-header-cell *matHeaderCellDef>Question</th>
+        <td mat-cell *matCellDef="let q">{{ q.question }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="answerType">
+        <th mat-header-cell *matHeaderCellDef>Answer Type</th>
+        <td mat-cell *matCellDef="let q">{{ q.answerType }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="allowedAnswers">
+        <th mat-header-cell *matHeaderCellDef>Allowed Answers</th>
+        <td mat-cell *matCellDef="let q">
+          <ng-container *ngIf="q.allowedAnswers?.length; else none">
+            <mat-chip-set>
+              <mat-chip *ngFor="let a of q.allowedAnswers">
+                {{ a }}
+              </mat-chip>
+            </mat-chip-set>
+          </ng-container>
+          <ng-template #none><em>—</em></ng-template>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+    </table>
+  </div>
+</mat-card>
+

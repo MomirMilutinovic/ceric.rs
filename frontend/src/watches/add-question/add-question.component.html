@@ -1,0 +1,57 @@
+<form [formGroup]="form" (ngSubmit)="onSubmit()" class="question-form">
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Question</mat-label>
+    <input
+      matInput
+      formControlName="question"
+      placeholder="Enter the question text"
+      required
+    />
+    <mat-error *ngIf="form.get('question')?.hasError('required')">
+      Question text is required
+    </mat-error>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" class="full-width">
+    <mat-label>Answer Type</mat-label>
+    <mat-select formControlName="answerType" required>
+      <mat-option value="number">Number</mat-option>
+      <mat-option value="boolean">Boolean</mat-option>
+      <mat-option value="string">String</mat-option>
+    </mat-select>
+    <mat-error *ngIf="form.get('answerType')?.hasError('required')">
+      Answer type is required
+    </mat-error>
+  </mat-form-field>
+
+  <div class="allowed-answers">
+    <label>Allowed Answers</label>
+    <div *ngFor="let ans of allowedAnswers.controls; let i = index" class="answer-row">
+      <mat-form-field appearance="outline" class="answer-field">
+        <input
+          matInput
+          [formControl]="$any(ans)"
+          placeholder="Allowed answer"
+          required
+        />
+        <mat-error *ngIf="ans.hasError('required')">
+          Answer value is required
+        </mat-error>
+      </mat-form-field>
+      <button mat-icon-button color="warn" type="button" (click)="removeAllowedAnswer(i)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+
+    <button mat-stroked-button type="button" (click)="addAllowedAnswer()">+ Add Allowed Answer</button>
+    <mat-error *ngIf="allowedAnswers.invalid && allowedAnswers.touched">
+      At least one allowed answer is required
+    </mat-error>
+  </div>
+
+  <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">
+    Submit
+  </button>
+</form>
+

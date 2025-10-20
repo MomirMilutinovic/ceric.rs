@@ -9,7 +9,7 @@ import {
 } from './model/responses';
 import { Watch } from './model/watch';
 import { ApiUrls } from '../app/shared/api-urls.enum';
-import { Answer, Question } from './model/question';
+import { Answer, IconicWatchQuestion, IconicWatchQuestionDto, Question, QuestionDto } from './model/question';
 
 @Injectable({
     providedIn: 'root',
@@ -59,5 +59,28 @@ export class WatchService {
                     return dtos;
                 })
             );
+    }
+
+    getCustomQuestions(): Observable<Question[]> {
+      return this.http
+        .get<Question[]>(ApiUrls.CustomQuestions);
+    }
+
+    addQuestion(questionDto: QuestionDto): Observable<Question> {
+      return this.http.post<Question>(ApiUrls.CustomQuestions, questionDto);
+    }
+
+    getIconicWatchQuestions(): Observable<IconicWatchQuestion[]> {
+      return this.http
+        .get<IconicWatchQuestion[]>(ApiUrls.IconicWatchQuestions);
+    }
+
+    addIconicWatchQuestion(iconicWatchQuestionDtoquestionDto: IconicWatchQuestionDto): Observable<String> {
+      return this.http.post<String>(ApiUrls.IconicWatchQuestions, iconicWatchQuestionDtoquestionDto);
+    }
+
+    getWatches(): Observable<Watch[]> {
+      return this.http
+        .get<Watch[]>(ApiUrls.AllWatches);
     }
 }

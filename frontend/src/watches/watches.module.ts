@@ -6,6 +6,10 @@ import { QuestionnaireComponent } from './questionnaire/questionnaire.component'
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
 import { RecommendationHistoryComponent } from './recommendation-history/recommendation-history.component';
 import { RouterModule } from '@angular/router';
+import { IconicWatchQuestionsComponent } from './iconic-watch-questions/iconic-watch-questions.component';
+import { CustomQuestionsComponent } from './custom-questions/custom-questions.component';
+import { AddQuestionComponent } from './add-question/add-question.component';
+import { AddIconicWatchQuestionComponent } from './add-iconic-watch-question/add-iconic-watch-question.component';
 
 
 
@@ -14,7 +18,11 @@ import { RouterModule } from '@angular/router';
     WatchCardComponent,
     QuestionnaireComponent,
     QuestionnaireResultComponent,
-    RecommendationHistoryComponent
+    RecommendationHistoryComponent,
+    IconicWatchQuestionsComponent,
+    CustomQuestionsComponent,
+    AddQuestionComponent,
+    AddIconicWatchQuestionComponent,
   ],
   imports: [
     CommonModule,
@@ -25,7 +33,11 @@ import { RouterModule } from '@angular/router';
     WatchCardComponent,
     QuestionnaireComponent,
     QuestionnaireResultComponent,
-    RecommendationHistoryComponent
+    RecommendationHistoryComponent,
+    IconicWatchQuestionsComponent,
+    CustomQuestionsComponent,
+    AddQuestionComponent,
+    AddIconicWatchQuestionComponent,
   ]
 })
 export class WatchesModule { }

@@ -1,6 +1,8 @@
 package com.ftn.sbnz.backward.service.questionnaire.service;
 
 import com.ftn.sbnz.backward.model.models.*;
+import com.ftn.sbnz.backward.service.questionnaire.dto.IconicWatchQuestionToAddDto;
+import com.ftn.sbnz.backward.service.questionnaire.dto.IconicWatchQuestionsDto;
 import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationHistoryDto;
 import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationsDto;
 import com.ftn.sbnz.backward.service.repository.IRecommendationEventRepository;
@@ -35,6 +37,8 @@ public class QuestionnaireService {
     private final IRecommendationEventRepository recommendationEventRepository;
 
     private final IRecommendationRepository recommendationRepository;
+
+    private static final Long lastPredefinedQuestionId = 14L;
 
     public QuestionnaireService(SessionRegistry sessionRegistry, IQuestionRepository questionRepository, IWatchRepository watchRepository, IIconicWatchQuestionRepository iconicWatchQuestionRepository, IRecommendationEventRepository recommendationEventRepository, IRecommendationRepository recommendationRepository) {
         this.sessionRegistry = sessionRegistry;
@@ -155,5 +159,36 @@ public class QuestionnaireService {
 
     public List<RecommendationHistoryDto> getRecommendationHistory(User user) {
         return this.recommendationEventRepository.getRecommendationHistoryByUser(user.getId());
+    }
+
+    public List<Question> getCustomQuestions() {
+        return this.questionRepository.findAllByIdGreaterThan(lastPredefinedQuestionId);
+    }
+
+    public Question addQuestion(Question question) {
+        return this.questionRepository.save(question);
+    }
+
+    public List<IconicWatchQuestionsDto> getIconicWatchQuestions() {
+        List<IconicWatchQuestion> iconicWatchQuestions = this.iconicWatchQuestionRepository.findAll();
+        return iconicWatchQuestions.stream().map(iwq -> new IconicWatchQuestionsDto(iwq.getId(), iwq.getQuestion().getQuestion(), iwq.getPositiveAnswer(), iwq.getPointBoost(), iwq.getWatches().stream().map(Watch::getName).collect(Collectors.toList()))).collect(Collectors.toList());
+    }
+
+    public List<Watch> getWatches() {
+        return this.watchRepository.findAll();
+    }
+
+    public void addIconicWatchQuestion(IconicWatchQuestionToAddDto iconicWatchQuestionToAddDto) {
+        Question question = this.questionRepository.findById(iconicWatchQuestionToAddDto.getQuestionId()).orElseThrow(() -> new IllegalArgumentException("Question not found"));
+        IconicWatchQuestion iconicWatchQuestion = new IconicWatchQuestion();
+        iconicWatchQuestion.setQuestion(question);
+        List<Watch> watches = new ArrayList<>();
+        for (Long watchId: iconicWatchQuestionToAddDto.getWatchIds()) {
+            watches.add(watchRepository.findById(watchId).orElseThrow(() -> new IllegalArgumentException("Watch not found")));
+        }
+        iconicWatchQuestion.setWatches(watches);
+        iconicWatchQuestion.setPointBoost(iconicWatchQuestionToAddDto.getPointBoost());
+        iconicWatchQuestion.setPositiveAnswer(iconicWatchQuestionToAddDto.getPositiveAnswer());
+        iconicWatchQuestionRepository.save(iconicWatchQuestion);
     }
 }

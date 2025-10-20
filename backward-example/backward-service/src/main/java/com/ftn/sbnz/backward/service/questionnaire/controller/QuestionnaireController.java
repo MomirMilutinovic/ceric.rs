@@ -1,12 +1,10 @@
 package com.ftn.sbnz.backward.service.questionnaire.controller;
 
+import com.ftn.sbnz.backward.model.models.IconicWatchQuestion;
 import com.ftn.sbnz.backward.model.models.Question;
 import com.ftn.sbnz.backward.model.models.User;
 import com.ftn.sbnz.backward.model.models.Watch;
-import com.ftn.sbnz.backward.service.questionnaire.dto.AnswerDto;
-import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationHistoryDto;
-import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationsDto;
-import com.ftn.sbnz.backward.service.questionnaire.dto.TrendingWatchesDto;
+import com.ftn.sbnz.backward.service.questionnaire.dto.*;
 import com.ftn.sbnz.backward.service.questionnaire.service.QuestionnaireService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -75,6 +73,38 @@ public class QuestionnaireController {
     public ResponseEntity<List<RecommendationHistoryDto>> getRecommendationHistory() {
         User user = (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         return ResponseEntity.ok(this.questionnaireService.getRecommendationHistory(user));
+    }
+
+    @GetMapping("/custom-questions")
+    public ResponseEntity<List<Question>> getCustomQuestions() {
+        return ResponseEntity.ok(this.questionnaireService.getCustomQuestions());
+    }
+
+    @PostMapping("/custom-questions")
+    public ResponseEntity<Question> addQuestion(@RequestBody QuestionDto questionDto) {
+        Question newQuestion = new Question();
+        newQuestion.setAllowedAnswers(questionDto.getAllowedAnswers());
+        newQuestion.setAnswerType(questionDto.getAnswerType());
+        newQuestion.setQuestion(questionDto.getQuestion());
+        newQuestion.setPriority(15L);
+        newQuestion.setId(null);
+        return ResponseEntity.ok(questionnaireService.addQuestion(newQuestion));
+    }
+
+    @GetMapping("/iconic-watch-questions")
+    public ResponseEntity<List<IconicWatchQuestionsDto>> getIconicWatchQuestions() {
+        return ResponseEntity.ok(this.questionnaireService.getIconicWatchQuestions());
+    }
+
+    @PostMapping("/iconic-watch-questions")
+    public ResponseEntity addIconicWatchQuestion(@RequestBody IconicWatchQuestionToAddDto iconicWatchQuestionToAddDto) {
+        this.questionnaireService.addIconicWatchQuestion(iconicWatchQuestionToAddDto);
+        return ResponseEntity.ok("OK");
+    }
+
+    @GetMapping("/watches")
+    public ResponseEntity<List<Watch>> getWatches() {
+        return ResponseEntity.ok(this.questionnaireService.getWatches());
     }
 
 }

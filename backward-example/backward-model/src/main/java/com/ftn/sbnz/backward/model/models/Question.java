@@ -14,9 +14,10 @@ import java.util.Optional;
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
+@SequenceGenerator(name="seq", initialValue=16, allocationSize=100)
 public class Question {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "seq")
     private Long id;
 
     @Column

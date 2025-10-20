@@ -1,0 +1,22 @@
+.table-container {
+  overflow-x: auto;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+
+  th {
+    font-weight: 600;
+    white-space: nowrap;
+  }
+
+  td, th {
+    padding: 0.5rem 1rem;
+    vertical-align: top;
+  }
+}
+
+mat-card-title {
+    padding: 1em;
+}

@@ -32,5 +32,8 @@ export enum ApiUrls {
   StartQuestionnaire = watchesURL + "start",
   Answer = watchesURL + "answer",
   GetRecommendations = watchesURL + "recommendations/",
-  RecommendationHistory = watchesURL + "history"
+  RecommendationHistory = watchesURL + "history",
+  CustomQuestions = watchesURL + "custom-questions",
+  IconicWatchQuestions = watchesURL + "iconic-watch-questions",
+  AllWatches = watchesURL + "watches"
 }

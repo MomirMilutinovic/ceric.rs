@@ -9,6 +9,10 @@ import { CreateHouseholdComponent } from './real-estate/create-household/create-
 import { QuestionnaireComponent } from '../watches/questionnaire/questionnaire.component';
 import { QuestionnaireResultComponent } from '../watches/questionnaire-result/questionnaire-result.component';
 import { RecommendationHistoryComponent } from '../watches/recommendation-history/recommendation-history.component';
+import { CustomQuestionsComponent } from '../watches/custom-questions/custom-questions.component';
+import { AddQuestionComponent } from '../watches/add-question/add-question.component';
+import { IconicWatchQuestionsComponent } from '../watches/iconic-watch-questions/iconic-watch-questions.component';
+import { AddIconicWatchQuestionComponent } from '../watches/add-iconic-watch-question/add-iconic-watch-question.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -18,6 +22,10 @@ const routes: Routes = [
   { path: 'questionnaire', component: QuestionnaireComponent },
   { path: 'results/:eventId', component: QuestionnaireResultComponent },
   { path: 'history', component: RecommendationHistoryComponent },
+  { path: 'custom-questions', component: CustomQuestionsComponent },
+  { path: 'add-custom-question', component: AddQuestionComponent },
+  { path: 'iconic-watch-questions', component: IconicWatchQuestionsComponent },
+  { path: 'add-iconic-watch-question', component: AddIconicWatchQuestionComponent },
 ];
 
 @NgModule({
