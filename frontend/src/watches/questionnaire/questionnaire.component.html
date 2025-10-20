@@ -1,0 +1,19 @@
+<div class="question-container">
+    <div class="question" *ngIf="currentQuestion">
+        <h1 class="question-text">{{ currentQuestion.question }}</h1>
+        <div class="answers" *ngIf="currentQuestion.allowedAnswers.length != 0">
+            <button mat-flat-button *ngFor="let answer of currentQuestion.allowedAnswers" (click)="answerQuestion(answer)">{{ answer }}</button>
+        </div>
+
+        <div *ngIf="currentQuestion.allowedAnswers.length == 0" class="free-answer">
+            <form [formGroup]="questionForm">
+                <mat-form-field appearance="outline">
+                    <mat-label>Answer</mat-label>
+                    <input matInput name="answer" formControlName="answer"/>
+                    <mat-error *ngIf="questionForm.get('answer')?.hasError('required')">Answer is required</mat-error>
+                </mat-form-field>
+                <button mat-flat-button [disabled]="!questionForm.valid" (click)="answerQuestion(questionForm.value.answer)">Next</button>
+            </form>
+        </div>
+    </div>
+</div>

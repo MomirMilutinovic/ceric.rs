@@ -17,7 +17,6 @@ import { NavigationComponent } from "./navigation/navigation.component";
 import { CommonModule } from "@angular/common";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { TokenInterceptor } from "./interceptor/TokenInterceptor";
-import { CryptoModule } from "./crypto/crypto.module";
 
 export function tokenGetter() {
   return localStorage.getItem("jwt");
@@ -43,7 +42,6 @@ export function tokenGetter() {
       MatAutocompleteModule,
       RealEstateModule,
       MaterialModule,
-      CryptoModule,
       JwtModule.forRoot({
         config: {
           tokenGetter: tokenGetter,

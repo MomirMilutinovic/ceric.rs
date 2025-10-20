@@ -3,13 +3,13 @@
       [attr.role]="(isSmall$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isSmall$ | async) ? 'over' : 'side'"
       [opened]="(isSmall$ | async) === false">
-    <mat-toolbar><img src="images/logo_horizontal.png" /></mat-toolbar>
+    <mat-toolbar><img src="images/logo2.jpg" /></mat-toolbar>
     <mat-nav-list *ngIf="userHasRole('ADMIN')">
       <a mat-list-item href="#" routerLink="watches">Watches</a>
       <a mat-list-item href="#" routerLink="iconic-watch-question">Iconic watch questions</a>
     </mat-nav-list>
     <mat-nav-list *ngIf="userHasRole('CUSTOMER')">
-      <a mat-list-item href="#" routerLink="watches">Questionnaire</a>
+      <a mat-list-item href="#" routerLink="questionnaire">Questionnaire</a>
       <a mat-list-item href="#" routerLink="results">My results</a>
     </mat-nav-list>
   </mat-sidenav>

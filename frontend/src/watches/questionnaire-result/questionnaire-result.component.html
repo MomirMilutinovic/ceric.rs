@@ -1,0 +1,16 @@
+<h1 *ngIf="loading">Loading your recommendations</h1>
+
+<div *ngIf="loading" class="loading">
+  <mat-spinner></mat-spinner>
+</div>
+
+<h1 *ngIf="!loading">Your watch recommendations for {{ date?.toLocaleString("sr-RS") }}</h1>
+
+<div *ngIf="!loading" class="grid">
+  <app-watch-card
+    *ngFor="let w of recommendations"
+    [watch]="w"
+    >
+  </app-watch-card>
+</div>
+

@@ -28,5 +28,9 @@ export enum ApiUrls {
   Sign = baseURL + "kms/sign",
   Verify = baseURL + "kms/verify",
 
-  TrendingWatches = watchesURL + "trending-watches"
+  TrendingWatches = watchesURL + "trending-watches",
+  StartQuestionnaire = watchesURL + "start",
+  Answer = watchesURL + "answer",
+  GetRecommendations = watchesURL + "recommendations/",
+  RecommendationHistory = watchesURL + "history"
 }

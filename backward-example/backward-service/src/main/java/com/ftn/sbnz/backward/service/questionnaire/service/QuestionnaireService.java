@@ -1,6 +1,8 @@
 package com.ftn.sbnz.backward.service.questionnaire.service;
 
 import com.ftn.sbnz.backward.model.models.*;
+import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationHistoryDto;
+import com.ftn.sbnz.backward.service.questionnaire.dto.RecommendationsDto;
 import com.ftn.sbnz.backward.service.repository.IRecommendationEventRepository;
 import com.ftn.sbnz.backward.service.repository.IRecommendationRepository;
 import com.ftn.sbnz.backward.service.sessionManagement.IIconicWatchQuestionRepository;
@@ -97,6 +99,8 @@ public class QuestionnaireService {
 
     public void answer(Question question, String sessionId) {
         SessionWrapper sessionWrapper = this.getSession(sessionId);
+        cepSessionWrapper.getKieSession().fireAllRules();
+        sessionWrapper.getKieSession().setGlobal("trendingWatches", getTrendingWatches());
         KieSession kieSession = sessionWrapper.getKieSession();
         QueryResults results = kieSession.getQueryResults("findQuestionById", question.getId());
         if (results.size() == 0) {
@@ -112,7 +116,7 @@ public class QuestionnaireService {
         kieSession.update(fh, question);
     }
 
-    public List<Recommendation> getRecommendations(String sessionId, User user) {
+    public RecommendationsDto getRecommendations(String sessionId, User user) {
         SessionWrapper sessionWrapper = this.getSession(sessionId);
 
         QueryResults results = sessionWrapper.getKieSession().getQueryResults("recommendations");
@@ -132,11 +136,24 @@ public class QuestionnaireService {
         cepSessionWrapper.getKieSession().fireAllRules();
 
         recommendations.sort(Comparator.comparing(Recommendation::getScore).reversed());
-        return recommendations;
+        return new RecommendationsDto(recommendations, recommendationEvent.getId(), recommendationEvent.getTimestamp());
     }
 
     private List<Recommendation> getAllWatches() {
         return watchRepository.findAll().stream().map(watch -> new Recommendation(null, 0.0, watch)).collect(Collectors.toList());
     }
 
+    public Optional<RecommendationsDto> getRecommendedWatches(Long recommendationEventId) {
+        RecommendationEvent recommendationEvent = recommendationEventRepository.findById(recommendationEventId).orElse(null);
+        if (recommendationEvent == null) {
+            return Optional.empty();
+        }
+        List<Recommendation> recommendations = recommendationEvent.getRecommendations();
+        recommendations.sort(Comparator.comparing(Recommendation::getScore).reversed());
+        return Optional.of(new RecommendationsDto(recommendations, recommendationEventId, recommendationEvent.getTimestamp()));
+    }
+
+    public List<RecommendationHistoryDto> getRecommendationHistory(User user) {
+        return this.recommendationEventRepository.getRecommendationHistoryByUser(user.getId());
+    }
 }

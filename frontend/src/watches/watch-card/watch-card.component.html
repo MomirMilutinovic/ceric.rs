@@ -42,7 +42,7 @@
         <dt>Glass</dt><dd>{{ watch.glassMaterial }}</dd>
       </div>
       <div *ngIf="watch?.waterResistanceBar !== null && watch?.waterResistanceBar !== undefined">
-        <dt>Water</dt>
+        <dt>Water Resistance</dt>
         <dd>{{ watch.waterResistanceBar }} bar<span *ngIf="waterResistanceMeters"> ({{ waterResistanceMeters }} m)</span></dd>
       </div>
     </dl>
