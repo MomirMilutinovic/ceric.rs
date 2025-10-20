@@ -107,4 +107,9 @@ public class QuestionnaireController {
         return ResponseEntity.ok(this.questionnaireService.getWatches());
     }
 
+    @PostMapping("/watches")
+    public ResponseEntity<Watch> addWatch(@RequestBody Watch watch) {
+        return ResponseEntity.ok(this.questionnaireService.addWatch(watch));
+    }
+
 }

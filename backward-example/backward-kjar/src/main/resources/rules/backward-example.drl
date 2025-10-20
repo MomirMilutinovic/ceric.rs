@@ -113,7 +113,7 @@ rule "Needs Robust Watch For Sports"
         $recommendation: Recommendation(
             $glass: watch.glassMaterial,
             $style: watch.style,
-            ($style != "Rugged" && !$glass.toLowerCase().contains("sapphire"))
+            ($style != "Rugged" && !$glass.toLowerCase().contains("sapphire") && !$glass.toLowerCase().contains("hesalite") && !$glass.toLowerCase().contains("hardlex"))
         )
     then
         delete($recommendation);

@@ -13,6 +13,8 @@ import { CustomQuestionsComponent } from '../watches/custom-questions/custom-que
 import { AddQuestionComponent } from '../watches/add-question/add-question.component';
 import { IconicWatchQuestionsComponent } from '../watches/iconic-watch-questions/iconic-watch-questions.component';
 import { AddIconicWatchQuestionComponent } from '../watches/add-iconic-watch-question/add-iconic-watch-question.component';
+import { AllWatchesComponent } from '../watches/all-watches/all-watches.component';
+import { AddWatchComponent } from '../watches/add-watch/add-watch.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'home', pathMatch: 'full' },
@@ -26,6 +28,8 @@ const routes: Routes = [
   { path: 'add-custom-question', component: AddQuestionComponent },
   { path: 'iconic-watch-questions', component: IconicWatchQuestionsComponent },
   { path: 'add-iconic-watch-question', component: AddIconicWatchQuestionComponent },
+  { path: 'watches', component: AllWatchesComponent },
+  { path: 'add-watch', component: AddWatchComponent },
 ];
 
 @NgModule({

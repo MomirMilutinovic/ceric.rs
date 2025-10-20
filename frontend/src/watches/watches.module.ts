@@ -10,6 +10,8 @@ import { IconicWatchQuestionsComponent } from './iconic-watch-questions/iconic-w
 import { CustomQuestionsComponent } from './custom-questions/custom-questions.component';
 import { AddQuestionComponent } from './add-question/add-question.component';
 import { AddIconicWatchQuestionComponent } from './add-iconic-watch-question/add-iconic-watch-question.component';
+import { AllWatchesComponent } from './all-watches/all-watches.component';
+import { AddWatchComponent } from './add-watch/add-watch.component';
 
 
 
@@ -23,6 +25,8 @@ import { AddIconicWatchQuestionComponent } from './add-iconic-watch-question/add
     CustomQuestionsComponent,
     AddQuestionComponent,
     AddIconicWatchQuestionComponent,
+    AllWatchesComponent,
+    AddWatchComponent
   ],
   imports: [
     CommonModule,
@@ -38,6 +42,8 @@ import { AddIconicWatchQuestionComponent } from './add-iconic-watch-question/add
     CustomQuestionsComponent,
     AddQuestionComponent,
     AddIconicWatchQuestionComponent,
+    AllWatchesComponent,
+    AddWatchComponent
   ]
 })
 export class WatchesModule { }

@@ -83,4 +83,8 @@ export class WatchService {
       return this.http
         .get<Watch[]>(ApiUrls.AllWatches);
     }
+
+    addWatch(watch: Watch): Observable<Watch> {
+      return this.http.post<Watch>(ApiUrls.AllWatches, watch);
+    }
 }

@@ -191,4 +191,8 @@ public class QuestionnaireService {
         iconicWatchQuestion.setPositiveAnswer(iconicWatchQuestionToAddDto.getPositiveAnswer());
         iconicWatchQuestionRepository.save(iconicWatchQuestion);
     }
+
+    public Watch addWatch(Watch watch) {
+        return this.watchRepository.save(watch);
+    }
 }
