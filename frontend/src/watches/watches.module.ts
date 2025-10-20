@@ -4,6 +4,8 @@ import { WatchCardComponent } from './watch-card/watch-card.component';
 import { MaterialModule } from '../app/infrastructure/material/material.module';
 import { QuestionnaireComponent } from './questionnaire/questionnaire.component';
 import { QuestionnaireResultComponent } from './questionnaire-result/questionnaire-result.component';
+import { RecommendationHistoryComponent } from './recommendation-history/recommendation-history.component';
+import { RouterModule } from '@angular/router';
 
 
 
@@ -11,16 +13,19 @@ import { QuestionnaireResultComponent } from './questionnaire-result/questionnai
   declarations: [
     WatchCardComponent,
     QuestionnaireComponent,
-    QuestionnaireResultComponent
+    QuestionnaireResultComponent,
+    RecommendationHistoryComponent
   ],
   imports: [
     CommonModule,
-    MaterialModule
-  ],
+    MaterialModule,
+    RouterModule
+],
   exports: [
     WatchCardComponent,
     QuestionnaireComponent,
-    QuestionnaireResultComponent
+    QuestionnaireResultComponent,
+    RecommendationHistoryComponent
   ]
 })
 export class WatchesModule { }

@@ -1,0 +1,8 @@
+<h1>You have taken the questionnaire on: </h1>
+<ul>
+    <li *ngFor="let entry of history.reverse()">
+        <a routerLink="/results/{{entry.eventId}}">
+            {{entry.timestamp.toLocaleString("sr-RS")}}
+        </a>
+    </li>
+</ul>
